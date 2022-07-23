@@ -1,5 +1,6 @@
 SRC =	src/main.c		\
 		src/dict/dict_utils.c \
+		src/lexer/lexer.c
 
 
 OBJ = $(SRC:.c=.o)

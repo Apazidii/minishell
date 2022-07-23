@@ -15,6 +15,12 @@ typedef struct s_dict
 	char *value;
 }		t_dict;
 
+typedef struct s_base
+{
+	t_list	*env_lst;
+	char	*command;
+}			t_base;
+
 
 
 //parse lst and lst utils
