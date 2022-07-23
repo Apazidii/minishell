@@ -1,5 +1,6 @@
 SRC =	src/main.c		\
-		src/map/map_utils.c \
+		src/dict/dict_utils.c \
+
 
 OBJ = $(SRC:.c=.o)
 DEP = $(SRC:.c=.d)
@@ -8,12 +9,13 @@ NAME 		= minishell
 LIBFT		= src/libft/libft.a
 LIBFTDIR	= src/libft
 CFLAGS 		=  -g
-CPPFLAGS 	= -MMD -I./include
+CPPFLAGS 	= -MMD -I./hdr
 
 all:		$(LIBFT) $(NAME) Makefile
 
 $(LIBFT):
 	@make -C $(LIBFTDIR) all
+	@make -C $(LIBFTDIR) bonus
 
 $(NAME):	$(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -lreadline -o $@

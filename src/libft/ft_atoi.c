@@ -6,7 +6,7 @@
 /*   By: dgalactu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 18:35:41 by dgalactu          #+#    #+#             */
-/*   Updated: 2021/10/18 18:35:58 by dgalactu         ###   ########.fr       */
+/*   Updated: 2022/07/22 15:51:19 by dgalactu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,6 @@ int	ft_atoi(const char *s)
 		str++;
 	}
 	if (b)
-		n = n * -1;
+		n = n *-1;
 	return (check(n, nospace(ss)));
 }

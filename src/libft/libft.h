@@ -6,20 +6,18 @@
 /*   By: dgalactu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 15:55:19 by dgalactu          #+#    #+#             */
-/*   Updated: 2022/02/15 21:00:04 by dgalactu         ###   ########.fr       */
+/*   Updated: 2021/10/15 15:55:33 by dgalactu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
-# define BUFFER_SIZE 42
 
 typedef struct s_list
 {
-	char			arr[BUFFER_SIZE + 1];
-	unsigned int	len;
+	void			*content;
 	struct s_list	*next;
-}	t_list;
+}				t_list;
 
 int				ft_isalpha(int ch);
 int				ft_isdigit(int ch);
