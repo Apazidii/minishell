@@ -27,7 +27,7 @@ t_list *parse_envp(char *envp[])
 	i = 1;
 	while (envp[i])
 	{
-		ft_lstadd_front(&env_lst, ft_lstnew((void *) parse_line_envp(envp[i])));
+		ft_lstadd_back(&env_lst, ft_lstnew((void *) parse_line_envp(envp[i])));
 		i++;
 		if (errno != 0)
 			return (NULL);

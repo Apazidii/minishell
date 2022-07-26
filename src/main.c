@@ -44,7 +44,7 @@ int main(int agrc, char *argv[], char *envp[]) {
 			}
 			if (error_code == 0)
 			{
-
+				parser(base.lexer, &base);
 			}
 		}
 	}

@@ -11,6 +11,8 @@
 #include <readline/history.h>
 
 
+
+
 enum e_type
 {
 	e_pipe,
@@ -47,9 +49,14 @@ typedef struct s_base
 }			t_base;
 
 
+
+//parser
+int parser(t_list *lexer, t_base *base);
+
 //lexer
 int lexer(char *command, t_base *base);
 void free_token(void *content);
+void print_token(void *content);
 
 //parse lst and lst utils
 t_list *parse_envp(char *envp[]);

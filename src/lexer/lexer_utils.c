@@ -35,6 +35,13 @@ void print_lexer(void *content)
 	printf("\n-----------------\n");
 }
 
+void print_token(void *content)
+{
+	t_token *c = (t_token *)content;
+	write(1, c->token, c->len);
+	write(1, "\n", 1);
+}
+
 char *skip_spaces(char *s)
 {
 	while (is_space(*s))
@@ -62,6 +69,5 @@ int check_qutes(char *s)
 		}
 		s++;
 	}
-
 	return (qo);
 }

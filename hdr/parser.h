@@ -1,8 +1,27 @@
-//
-// Created by dgalactu on 26.07.22.
-//
+#ifndef PARSER_H
+#define PARSER_H
 
-#ifndef MINISHELL_PARSER_H
-#define MINISHELL_PARSER_H
+#define VALID_ERROR 1
+#define MALLOC_ERROR -1
+#define SUCCES 0
+#define END_OF_LEXER 2
 
-#endif //MINISHELL_PARSER_H
+typedef struct s_group
+{
+	t_list		*program;
+
+	t_list		*arg;
+	int			number_arg;
+
+	int			use_redirect;
+	enum e_type	type_redirect;
+	t_list		*redirect_file;
+
+	int 		pipe_input;
+	int 		pipe_output;
+}			t_group;
+
+int check_parenthesis(t_list *lexer);
+void print_group(void *content);
+
+#endif

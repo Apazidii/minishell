@@ -249,6 +249,7 @@ int lexer(char *command, t_base *base)
 			return (1);
 	}
 	base->lexer = lexer;
+//	ft_lstiter(lexer, print_token);
 	return (0);
 }
 
