@@ -6,7 +6,7 @@
 /*   By: dgalactu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 15:44:26 by dgalactu          #+#    #+#             */
-/*   Updated: 2022/07/22 15:51:19 by dgalactu         ###   ########.fr       */
+/*   Updated: 2022/07/26 10:48:40 by dgalactu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 {
 	t_list	*last_elem;
 
-	if (!*lst)
+	if (!(*lst))
 	{
 		*lst = new;
 	}

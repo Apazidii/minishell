@@ -42,7 +42,7 @@ void print_content(void *content)
 	printf("%-40s%s\n", c->key, c->value);
 }
 
-void free_lst_elem(void *content)
+void free_dict(void *content)
 {
 	t_dict *c = (t_dict *)content;
 	free(c->key);
@@ -50,11 +50,6 @@ void free_lst_elem(void *content)
 	free(c);
 }
 
-void free_lst(t_list *lst)
-{
-	ft_lstclear(&lst, free_lst_elem);
-}
 
 
-#include "../../hdr/minishell.h"
 

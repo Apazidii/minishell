@@ -22,23 +22,42 @@ char *read_cmd(void)
 }
 
 int main(int agrc, char *argv[], char *envp[]) {
-	t_base base;
+	t_base	base;
+	int		error_code;
 
 	base.env_lst = parse_envp(envp);
 //	if (errno != 0)
 //		//обработка ошибок
 //	ft_lstiter(env_lst, print_content);
+
 	while (1)
 	{
 		base.command = read_cmd();
-		free(base.command);
+		if (is_space_string(base.command))
+		{
+			error_code = lexer(base.command, &base);
+			if (error_code == 1)
+			{
+				ft_lstclear(&base.env_lst, free_dict);
+				free(base.command);
+				return (1);
+			}
+			if (error_code == 0)
+			{
+
+			}
+		}
 	}
 
+	ft_lstclear(&base.lexer, free_token);
+	free(base.command);
+//	}
 
 
 
 
-	free_lst(base.env_lst);
+
+	ft_lstclear(&base.env_lst, free_dict);
 	return 0;
 }
 
