@@ -10,7 +10,7 @@ typedef struct s_group
 {
 	t_list		*program;
 
-	t_list		*arg;
+	char 		**arg;
 	int			number_arg;
 
 	int			use_redirect;
@@ -23,5 +23,10 @@ typedef struct s_group
 
 int check_parenthesis(t_list *lexer);
 void print_group(void *content);
+int is_redirect(t_list *lexer);
+char **arr_add_str(char **arr, char *str, int len_str);
+void free_arr_str(char **arr);
+void free_group(void *gr);
+
 
 #endif

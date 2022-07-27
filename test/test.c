@@ -1,15 +1,29 @@
-# include <unistd.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-# include <stdio.h>
+#include <stdlib.h>
+#include <stdio.h>
 
+int len_arr_str(char **arr)
+{
+	int i;
 
-
+	i = 0;
+	while(arr[i] != NULL)
+		i++;
+	return (i);
+}
 
 int main()
 {
-	char s[] = "123456789";
+	char s1[] = "11";
+	char s2[] = "22";
+	char s3[] = "33";
+	char s4[] = "44";
 
-	printf("%.*s\n", 5, s);
+	char **r;
+
+	*r = NULL;
+
+	char *s[] = {s1, s2, s3, s4, NULL};
+	printf("%d\n", len_arr_str(s));
+
+
 }
