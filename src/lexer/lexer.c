@@ -170,6 +170,7 @@ int str_lexer(char **command, t_list **lexer)
 		i++;
 	}
 	token->len = i;
+	token->rep_var = 1;
 	token->type = e_str;
 	*command = &(*command)[i];
 	new = ft_lstnew((void *)token);

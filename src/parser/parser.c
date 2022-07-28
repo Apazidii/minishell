@@ -71,6 +71,12 @@ int group_parser(t_list **lex, t_group **gr)
 				free_group(group);
 				return (MALLOC_ERROR);
 			}
+			group->rep_var = add_arr_int(group->rep_var, ((t_token *)lexer->content)->rep_var);
+			if (group->rep_var == NULL)
+			{
+				free_group(group);
+				return (MALLOC_ERROR);
+			}
 			i++;
 			lexer = lexer->next;
 		}
@@ -106,5 +112,7 @@ int parser(t_list *lexer, t_base *base)
 		}
 		ft_lstadd_back(&all_groups, ft_lstnew(group));
 	}
-	ft_lstiter(all_groups, print_group);
+	base->groups = all_groups;
+	ft_lstiter(base->groups, print_group);
+	return (SUCCES);
 }

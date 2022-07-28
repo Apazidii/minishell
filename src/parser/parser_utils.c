@@ -38,6 +38,13 @@ void print_group(void *content)
 		printf("%s ", (group->arg)[i]);
 		i++;
 	}
+	printf("\n\t\t\trep: ");
+	i = 0;
+	while (group->rep_var[i] != -1)
+	{
+		printf("%d ", group->rep_var[i]);
+		i++;
+	}
 	printf("\n\n");
 	if (group->use_redirect)
 		printf("\t\t\tredirect file: %.*s\n\n", ((t_token *)group->redirect_file->content)->len, ((t_token *)group->redirect_file->content)->token);
@@ -58,11 +65,13 @@ void free_group(void *gr)
 {
 	t_group  *group;
 
-	group = (t_group *)gr;
-	if (!group)
-		return;
-	if (!group->arg)
-		return;
-	free_arr_str(group->arg);
-	free(group);
+	if (gr != NULL)
+	{
+		group = (t_group *)gr;
+		if (group->arg != NULL)
+			free_arr_str(group->arg);
+		if (group->rep_var != NULL)
+			free(group->rep_var);
+		free(group);
+	}
 }

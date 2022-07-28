@@ -2,7 +2,7 @@
 #include "parser.h"
 
 
-int len_arr_str(char **arr)
+static int len_arr_str(char **arr)
 {
 	int i;
 

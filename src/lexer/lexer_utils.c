@@ -6,7 +6,6 @@ void free_token(void *content)
 	t_token *c;
 
 	c = (t_token *)content;
-	free(c->token);
 	free(c);
 }
 

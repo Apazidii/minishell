@@ -33,6 +33,7 @@ typedef struct s_dict
 	char *value;
 }		t_dict;
 
+
 typedef struct s_token
 {
 	char	*token;
@@ -45,13 +46,31 @@ typedef struct s_base
 {
 	t_list	*env_lst;
 	t_list	*lexer;
+	t_list	*groups;
 	char	*command;
 }			t_base;
+
+typedef struct s_group
+{
+	t_list		*program;
+
+	char 		**arg;
+	int 		*rep_var;
+	int			number_arg;
+
+	int			use_redirect;
+	enum e_type	type_redirect;
+	t_list		*redirect_file;
+
+	int 		pipe_input;
+	int 		pipe_output;
+}			t_group;
 
 
 
 //parser
 int parser(t_list *lexer, t_base *base);
+void free_group(void *gr);
 
 //lexer
 int lexer(char *command, t_base *base);

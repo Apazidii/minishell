@@ -35,26 +35,30 @@ int main(int agrc, char *argv[], char *envp[]) {
 		base.command = read_cmd();
 		if (is_space_string(base.command))
 		{
+			if (base.command[0] == '0')
+			{
+				free(base.command);
+				break;
+			}
 			error_code = lexer(base.command, &base);
 			if (error_code == 1)
 			{
 				ft_lstclear(&base.env_lst, free_dict);
+				ft_lstclear(&base.lexer, free_token);
 				free(base.command);
 				return (1);
 			}
 			if (error_code == 0)
 			{
 				parser(base.lexer, &base);
+				ft_lstclear(&base.env_lst, free_dict);
+				ft_lstclear(&base.lexer,  free_token);
+				ft_lstclear(&base.groups, free_group);
+				free(base.command);
 			}
 		}
 	}
-
-	ft_lstclear(&base.lexer, free_token);
-	free(base.command);
-//	}
-
-
-
+	rl_clear_history();
 
 
 	ft_lstclear(&base.env_lst, free_dict);
