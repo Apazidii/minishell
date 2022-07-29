@@ -4,30 +4,7 @@
 
 //syntax error near unexpected token "&&"
 
-int redirect_parser(t_list **lexer, t_group *group)
-{
-	t_token *c;
 
-	c = (t_token *)(*lexer)->content;
-	group->type_redirect = c->type;
-	group->use_redirect = 1;
-	*lexer = (*lexer)->next;
-	if (*lexer == NULL)
-	{
-		printf("minishell: syntax error near unexpected token \"newline\"\n");
-		return (VALID_ERROR);
-	}
-	c = (t_token *)(*lexer)->content;
-	if (c->type != e_str)
-	{
-		printf("minishell: syntax error near unexpected token \"%.*s\"\n", c->len, c->token);
-		return (VALID_ERROR);
-	}
-	group->redirect_file = *lexer;
-	*lexer = (*lexer)->next;
-	return (SUCCES);
-
-}
 
 int group_parser(t_list **lex, t_group **gr)
 {
@@ -57,7 +34,7 @@ int group_parser(t_list **lex, t_group **gr)
 	{
 		if (is_redirect(lexer))
 		{
-			if (redirect_parser(&lexer, group) != SUCCES)
+			if (redirect_manager(&lexer, group) != SUCCES)
 			{
 				free_group(group);
 				return (VALID_ERROR);

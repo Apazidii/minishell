@@ -37,7 +37,9 @@ void print_lexer(void *content)
 void print_token(void *content)
 {
 	t_token *c = (t_token *)content;
+	write(1, "_", 1);
 	write(1, c->token, c->len);
+	write(1, "_", 1);
 	write(1, "\n", 1);
 }
 

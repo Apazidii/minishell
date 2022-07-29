@@ -1,11 +1,12 @@
-SRC =	src/main.c					\
-		src/dict/dict_utils.c		\
-		src/lexer/lexer.c			\
-		src/lexer/lexer_utils.c		\
-		src/parser/parser.c			\
-		src/parser/parser_utils.c	\
-		src/parser/parser_str.c		\
-		src/parser/parser_int.c
+SRC =	src/main.c						\
+		src/dict/dict_utils.c			\
+		src/lexer/lexer.c				\
+		src/lexer/lexer_utils.c			\
+		src/parser/parser.c				\
+		src/parser/parser_utils.c		\
+		src/parser/parser_str.c			\
+		src/parser/parser_int.c			\
+		src/parser/parser_redirect.c	\
 
 
 

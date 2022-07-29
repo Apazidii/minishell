@@ -48,6 +48,10 @@ void print_group(void *content)
 	printf("\n\n");
 	if (group->use_redirect)
 		printf("\t\t\tredirect file: %.*s\n\n", ((t_token *)group->redirect_file->content)->len, ((t_token *)group->redirect_file->content)->token);
+	if (group->use_reverse_redirect)
+		printf("\t\t\tredirect file: %.*s\n\n", ((t_token *)group->reverse_redirect_file->content)->len, ((t_token *)group->reverse_redirect_file->content)->token);
+
+
 	printf("------------------------------------------\n");
 }
 

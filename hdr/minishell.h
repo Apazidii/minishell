@@ -62,6 +62,13 @@ typedef struct s_group
 	enum e_type	type_redirect;
 	t_list		*redirect_file;
 
+	int			use_reverse_redirect;
+	enum e_type	type_reverse_redirect;
+	t_list		*reverse_redirect_file;
+
+
+
+
 	int 		pipe_input;
 	int 		pipe_output;
 }			t_group;

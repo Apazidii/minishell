@@ -231,7 +231,8 @@ int manager_lexer(char **command, t_list **lexer)
 		return (and_lexer(command, lexer));
 	if (**command == '\'' || **command == '"')
 		return (quote_lexer(command, lexer));
-	return (str_lexer(command, lexer));
+	if (**command != '\0')
+		return (str_lexer(command, lexer));
 }
 
 int lexer(char *command, t_base *base)
@@ -250,7 +251,7 @@ int lexer(char *command, t_base *base)
 			return (1);
 	}
 	base->lexer = lexer;
-//	ft_lstiter(lexer, print_token);
+	ft_lstiter(lexer, print_token);
 	return (0);
 }
 
