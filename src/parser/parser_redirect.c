@@ -20,7 +20,13 @@ int redirect_parser(t_list **lexer, t_group *group)
 		printf("minishell: syntax error near unexpected token \"%.*s\"\n", c->len, c->token);
 		return (VALID_ERROR);
 	}
-	group->redirect_file = *lexer;
+
+	group->redirect_file = ft_substr(((t_token *)(*lexer)->content)->token, 0, ((t_token *)(*lexer)->content)->len);
+	if (group->redirect_file == NULL)
+	{
+		free_group(group);
+		return (MALLOC_ERROR);
+	}
 	*lexer = (*lexer)->next;
 	return (SUCCES);
 
@@ -45,7 +51,12 @@ int reverse_redirect_parser(t_list **lexer, t_group *group)
 		printf("minishell: syntax error near unexpected token \"%.*s\"\n", c->len, c->token);
 		return (VALID_ERROR);
 	}
-	group->reverse_redirect_file = *lexer;
+	group->reverse_redirect_file = ft_substr(((t_token *)(*lexer)->content)->token, 0, ((t_token *)(*lexer)->content)->len);
+	if (group->reverse_redirect_file == NULL)
+	{
+		free_group(group);
+		return (MALLOC_ERROR);
+	}
 	*lexer = (*lexer)->next;
 	return (SUCCES);
 }

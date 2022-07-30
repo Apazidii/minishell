@@ -26,8 +26,12 @@ int group_parser(t_list **lex, t_group **gr)
 	if (!group)
 		return (MALLOC_ERROR);
 	group->arg = (char **) ft_calloc(sizeof(char *), 1);
-	(group->arg)[0] == NULL;
-	group->program = lexer;
+	group->program = ft_substr(((t_token *)lexer->content)->token, 0, ((t_token *)lexer->content)->len);
+	if (group->program == NULL)
+	{
+		free_group(group);
+		return (MALLOC_ERROR);
+	}
 	lexer = lexer->next;
 	i = 0;
 	while (lexer != NULL && ((t_token *)lexer->content)->type != e_pipe)
@@ -69,6 +73,17 @@ int group_parser(t_list **lex, t_group **gr)
 	return (SUCCES);
 }
 
+void pipe_placement(t_list *group)
+{
+	while (group)
+	{
+		if (((t_group *)group->content)->pipe_output)
+			if (group->next)
+				((t_group *)group->next->content)->pipe_input = 1;
+		group = group->next;
+	}
+}
+
 int parser(t_list *lexer, t_base *base)
 {
 	t_list *all_groups;
@@ -90,6 +105,7 @@ int parser(t_list *lexer, t_base *base)
 		ft_lstadd_back(&all_groups, ft_lstnew(group));
 	}
 	base->groups = all_groups;
+	pipe_placement(all_groups);
 	ft_lstiter(base->groups, print_group);
 	return (SUCCES);
 }

@@ -32,7 +32,6 @@ char **arr_add_str(char **arr, char *str, int len_str)
 	char	**res;
 	int 	i;
 
-//	if (arr = NULL)
 	l = len_arr_str(arr);
 	res = (char **)ft_calloc(sizeof(char *), l + 2);
 	if (!res)

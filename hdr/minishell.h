@@ -52,7 +52,7 @@ typedef struct s_base
 
 typedef struct s_group
 {
-	t_list		*program;
+	char		*program;
 
 	char 		**arg;
 	int 		*rep_var;
@@ -60,11 +60,11 @@ typedef struct s_group
 
 	int			use_redirect;
 	enum e_type	type_redirect;
-	t_list		*redirect_file;
+	char		*redirect_file;
 
 	int			use_reverse_redirect;
 	enum e_type	type_reverse_redirect;
-	t_list		*reverse_redirect_file;
+	char		*reverse_redirect_file;
 
 
 

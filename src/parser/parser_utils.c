@@ -29,7 +29,7 @@ void print_group(void *content)
 	group = (t_group *)content;
 
 	printf("------------------------------------------\n\n");
-	printf("\t\t\tprogram: %.*s\n\n", ((t_token *)group->program->content)->len, ((t_token *)group->program->content)->token);
+	printf("\t\t\tprogram: %s\n\n", group->program);
 	printf("\t\t\tnum of arg: %d\n", group->number_arg);
 	printf("\t\t\targ: ");
 	i = 0;
@@ -46,10 +46,13 @@ void print_group(void *content)
 		i++;
 	}
 	printf("\n\n");
+	printf("\t\t\tpipe input: %d\n", group->pipe_input);
+	printf("\t\t\tpipe output: %d\n\n", group->pipe_output);
+
 	if (group->use_redirect)
-		printf("\t\t\tredirect file: %.*s\n\n", ((t_token *)group->redirect_file->content)->len, ((t_token *)group->redirect_file->content)->token);
+		printf("\t\t\tredirect file: %s\n\n", group->redirect_file);
 	if (group->use_reverse_redirect)
-		printf("\t\t\tredirect file: %.*s\n\n", ((t_token *)group->reverse_redirect_file->content)->len, ((t_token *)group->reverse_redirect_file->content)->token);
+		printf("\t\t\treverse redirect file: %s\n\n", group->reverse_redirect_file);
 
 
 	printf("------------------------------------------\n");
@@ -76,6 +79,12 @@ void free_group(void *gr)
 			free_arr_str(group->arg);
 		if (group->rep_var != NULL)
 			free(group->rep_var);
+		if (group->program)
+			free(group->program);
+		if (group->redirect_file)
+			free(group->redirect_file);
+		if (group->reverse_redirect_file)
+			free(group->reverse_redirect_file);
 		free(group);
 	}
 }
