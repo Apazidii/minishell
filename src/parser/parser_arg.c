@@ -16,7 +16,7 @@ t_arg	*add_arg(t_arg *arg, int num_arg, t_token *token)
 	if (res[i].arg == NULL && free_group_arg(res, num_arg + 1) && free_group_arg(arg, num_arg))
 		return (NULL);
 	res[i].rep_var = token->rep_var;
-	free_group_arg(arg, num_arg);
+	free(arg);
 	return (res);
 }
 

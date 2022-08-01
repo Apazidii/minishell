@@ -84,6 +84,7 @@ typedef struct s_group
 
 //parser
 int parser(t_list *lexer, t_base *base);
+void free_group_list(void *content);
 //void free_group(void *gr);
 
 //lexer

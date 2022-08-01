@@ -7,10 +7,10 @@ int free_group_arg(t_arg *arg, int num_arg)
 
 	if (arg != NULL)
 	{
-		i = 0;
-		while (i++ < num_arg)
-			if (arg->arg != NULL)
-				free(arg->arg);
+		i = -1;
+		while (++i < num_arg)
+			if (arg[i].arg != NULL)
+				free(arg[i].arg);
 		free(arg);
 	}
 	return (1);

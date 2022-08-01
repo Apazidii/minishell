@@ -21,14 +21,13 @@ int check_parenthesis(t_list *lexer)
 	return (1);
 }
 
-void print_group(void *gr)
+void print_group(void *content)
 {
-	t_group *group;
+	t_group *group = (t_group *)content;
 	int		i;
 
 	i = 0;
-	group = (t_group *)gr;
-	printf("----------------------------------\n\n");
+	printf("--------------------------------------------------------------------\n\n");
 	printf("\t\t\tprogram: %s\n", group->arg[0].arg);
 	printf("\t\t\targ: ");
 	while (++i < group->number_arg)
@@ -39,5 +38,5 @@ void print_group(void *gr)
 	if (group->reverse_redirect.use_redirect)
 		printf("\t\t\treverse redirect file: %s\n", group->reverse_redirect.redirect_file);
 	printf("\n");
-	printf("----------------------------------\n");
+	printf("--------------------------------------------------------------------\n");
 }

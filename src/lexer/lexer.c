@@ -255,7 +255,7 @@ int lexer(char *command, t_base *base)
 	nl = ft_lstlast(lexer);
 	((t_token *)(nl->content))->type = e_newline;
 	base->lexer = lexer;
-	ft_lstiter(lexer, print_token);
+//	ft_lstiter(lexer, print_token);
 	return (0);
 }
 

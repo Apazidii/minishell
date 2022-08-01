@@ -39,11 +39,6 @@ void print_token(void *content)
 	t_token *c = (t_token *)content;
 	write(1, "_", 1);
 	write(1, c->token, c->len);
-	write(1, " ", 1);
-	if (c->type == e_newline)
-		write(1, "1", 1);
-	else
-		write(1, "0", 1);
 	write(1, "_", 1);
 	write(1, "\n", 1);
 }

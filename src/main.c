@@ -74,6 +74,9 @@ int main(int agrc, char *argv[], char *envp[]) {
 			if (error_code == 0)
 			{
 				parser(base.lexer, &base);
+				ft_lstclear(&base.lexer, free_token);
+				ft_lstclear(&base.groups, free_group_list);
+				free(base.command);
 			}
 		}
 	}
