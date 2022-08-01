@@ -239,6 +239,7 @@ int manager_lexer(char **command, t_list **lexer)
 int lexer(char *command, t_base *base)
 {
 	t_list *lexer;
+	t_list *nl;
 
 	lexer = NULL;
 	if (check_qutes(command))
@@ -251,8 +252,10 @@ int lexer(char *command, t_base *base)
 		if (manager_lexer(&command, &lexer))
 			return (1);
 	}
+	nl = ft_lstlast(lexer);
+	((t_token *)(nl->content))->type = e_newline;
 	base->lexer = lexer;
-//	ft_lstiter(lexer, print_token);
+	ft_lstiter(lexer, print_token);
 	return (0);
 }
 

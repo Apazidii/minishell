@@ -24,6 +24,7 @@ enum e_type
 	e_close_parenthesis,
 	e_and,
 	e_or,
+	e_newline,
 	e_str
 };
 
@@ -50,24 +51,30 @@ typedef struct s_base
 	char	*command;
 }			t_base;
 
+
+
+typedef struct s_arg
+{
+	char	*arg;
+	int		rep_var;
+}			t_arg;
+
+typedef struct s_redirect
+{
+	int			use_redirect;
+	enum e_type	type_redirect;
+	char		*redirect_file;
+}				t_redirect;
+
 typedef struct s_group
 {
 	char		*program;
 
-	char 		**arg;
-	int 		*rep_var;
+	t_arg		*arg;
 	int			number_arg;
 
-	int			use_redirect;
-	enum e_type	type_redirect;
-	char		*redirect_file;
-
-	int			use_reverse_redirect;
-	enum e_type	type_reverse_redirect;
-	char		*reverse_redirect_file;
-
-
-
+	t_redirect redirect;
+	t_redirect reverse_redirect;
 
 	int 		pipe_input;
 	int 		pipe_output;
@@ -77,7 +84,7 @@ typedef struct s_group
 
 //parser
 int parser(t_list *lexer, t_base *base);
-void free_group(void *gr);
+//void free_group(void *gr);
 
 //lexer
 int lexer(char *command, t_base *base);

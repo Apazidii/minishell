@@ -6,14 +6,14 @@
 #define SUCCES 0
 #define END_OF_LEXER 2
 
-
 int check_parenthesis(t_list *lexer);
-void print_group(void *content);
-int is_redirect(t_list *lexer);
-char **arr_add_str(char **arr, char *str, int len_str);
-void free_arr_str(char **arr);
-int *add_arr_int(int *arr, int rep_var);
-int redirect_manager(t_list **lexer, t_group *group);
+int	manager_redirect(t_list **lexer, t_group *group);
+int free_group(t_group *group);
+int parse_arg(t_list **lexer, t_group *group);
+int free_group_arg(t_arg *arg, int num_arg);
+void free_group_list(void *content);
+
+void print_group(void *gr);
 
 
 #endif

@@ -4,9 +4,10 @@ SRC =	src/main.c						\
 		src/lexer/lexer_utils.c			\
 		src/parser/parser.c				\
 		src/parser/parser_utils.c		\
-		src/parser/parser_str.c			\
-		src/parser/parser_int.c			\
+		src/parser/parser_free.c		\
 		src/parser/parser_redirect.c	\
+		src/parser/parser_arg.c			\
+#		src/parser/parser_int.c			\
 
 
 

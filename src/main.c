@@ -11,6 +11,17 @@ int is_space_string(char *s)
 	return (0);
 }
 
+char *add_newline(char *cmd)
+{
+	char *res;
+
+	res = ft_strjoin(cmd, " newline");
+	free(cmd);
+	if (!res)
+		return (NULL);
+	return (res);
+}
+
 char *read_cmd(void)
 {
     char *s;
@@ -18,6 +29,7 @@ char *read_cmd(void)
     s = readline("minishell$ ");
     if (s && is_space_string(s))
 		add_history(s);
+	s = add_newline(s);
 	return (s);
 }
 
@@ -33,13 +45,24 @@ int main(int agrc, char *argv[], char *envp[]) {
 	while (1)
 	{
 		base.command = read_cmd();
+		while (base.command == NULL)
+		{
+			printf("Malloc error\n");
+			base.command = read_cmd();
+		}
+
 		if (is_space_string(base.command))
 		{
+
+			//УДАЛИТЬ
 			if (base.command[0] == '0')
 			{
 				free(base.command);
 				break;
 			}
+			//УДАЛИТЬ
+
+
 			error_code = lexer(base.command, &base);
 			if (error_code == 1)
 			{
@@ -51,10 +74,6 @@ int main(int agrc, char *argv[], char *envp[]) {
 			if (error_code == 0)
 			{
 				parser(base.lexer, &base);
-				ft_lstclear(&base.env_lst, free_dict);
-				ft_lstclear(&base.lexer,  free_token);
-				ft_lstclear(&base.groups, free_group);
-				free(base.command);
 			}
 		}
 	}
