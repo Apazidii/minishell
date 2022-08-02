@@ -1,11 +1,8 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#define VALID_ERROR 1
-#define MALLOC_ERROR -1
-#define SUCCES 0
-#define END_OF_LEXER 2
-
+void set_pipe(t_list *group);
+int check_pipe(t_list *lexer);
 int check_parenthesis(t_list *lexer);
 int	manager_redirect(t_list **lexer, t_group *group);
 int free_group(t_group *group);

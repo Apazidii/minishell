@@ -10,7 +10,10 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-
+#define VALID_ERROR 1
+#define MALLOC_ERROR -1
+#define SUCCES 0
+#define END_OF_LEXER 2
 
 
 enum e_type
@@ -43,15 +46,25 @@ typedef struct s_token
 	int		rep_var;
 }			t_token;
 
+
+typedef struct s_cwd
+{
+	char	*path;
+	size_t	size;
+}			t_cwd;
+
+
 typedef struct s_base
 {
 	t_list	*env_lst;
 	t_list	*lexer;
 	t_list	*groups;
+
 	char	*command;
+
+	t_cwd	cwd;
+
 }			t_base;
-
-
 
 typedef struct s_arg
 {
@@ -81,11 +94,13 @@ typedef struct s_group
 }			t_group;
 
 
+//builtin
+void echo(char **arg, int num_arg);
+
 
 //parser
 int parser(t_list *lexer, t_base *base);
 void free_group_list(void *content);
-//void free_group(void *gr);
 
 //lexer
 int lexer(char *command, t_base *base);
@@ -96,6 +111,10 @@ void print_token(void *content);
 t_list *parse_envp(char *envp[]);
 void print_content(void *content);
 void free_dict(void *content);
+
+//main
+char *read_cmd(void);
+int get_cwd(t_base *base);
 
 
 #endif

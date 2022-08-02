@@ -18,7 +18,33 @@ int check_parenthesis(t_list *lexer)
 	}
 	if (open == close)
 		return (0);
+	printf("Error: brackets are not closed\n");
 	return (1);
+}
+
+int check_pipe(t_list *lexer)
+{
+	while (lexer)
+	{
+		if (((t_token *)lexer->content)->type == e_pipe && \
+			((t_token *)lexer->next->content)->type == e_newline)
+		{
+			printf("minishell: syntax error near unexpected token \'newline\'");
+			return (1);
+		}
+		lexer = lexer->next;
+	}
+	return (0);
+}
+
+void set_pipe(t_list *group)
+{
+	while (group)
+	{
+		if (((t_group *)group->content)->pipe_output)
+			((t_group *)group->next->content)->pipe_input = 1;
+		group = group->next;
+	}
 }
 
 void print_group(void *content)

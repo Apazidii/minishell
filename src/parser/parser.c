@@ -11,9 +11,8 @@ int group_parser(t_list **lexer, t_group **gr)
 	group = (t_group *) ft_calloc(sizeof(t_group), 1);
 	if (group == NULL)
 		return (MALLOC_ERROR);
-	while (((t_token *)((*lexer)->content))->type != e_newline)
+	while (((t_token *)((*lexer)->content))->type != e_newline && ((t_token *)((*lexer)->content))->type != e_pipe)
 	{
-
 		error_code = manager_redirect(lexer, group);
 		if (error_code != SUCCES)
 			return (error_code);
@@ -22,7 +21,10 @@ int group_parser(t_list **lexer, t_group **gr)
 			return (error_code);
 	}
 	if (((t_token *)((*lexer)->content))->type == e_pipe)
+	{
 		group->pipe_output = 1;
+		*lexer = (*lexer)->next;
+	}
 	*gr = group;
 	return (SUCCES);
 }
@@ -35,10 +37,9 @@ int parser(t_list *lexer, t_base *base)
 
 	all_groups = NULL;
 	if (check_parenthesis(lexer))
-	{
-		printf("Error: brackets are not closed\n");
 		return (2);
-	}
+	if (check_pipe(lexer))
+		return (2);
 	while (((t_token *)lexer->content)->type != e_newline)
 	{
 		error_code = group_parser(&lexer, &group);
@@ -49,10 +50,9 @@ int parser(t_list *lexer, t_base *base)
 			return (error_code);
 		}
 		ft_lstadd_back(&all_groups, ft_lstnew((void *)group));
-//		lexer = lexer->next;
 	}
+	set_pipe(all_groups);
 	base->groups = all_groups;
-	t_group *g = all_groups->content;
 	ft_lstiter(all_groups, print_group);
 	return (SUCCES);
 }
