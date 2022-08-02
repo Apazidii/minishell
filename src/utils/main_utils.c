@@ -33,25 +33,13 @@ char *read_cmd(void)
 	return (s);
 }
 
-
 int get_cwd(t_base *base)
 {
-	base->cwd.size = 100;
-	base->cwd.path = ft_calloc(sizeof(char), base->cwd.size);
-	if (base->cwd.path == NULL)
-		return (MALLOC_ERROR);
-	base->cwd.path = getcwd(base->cwd.path, base->cwd.size);
-
-	return (SUCCES);
-}
-
-int add_size_cwd(t_base *base)
-{
-	if (base->cwd.path != NULL)
-		free(base->cwd.path);
-	base->cwd.size += 100;
-	base->cwd.path = ft_calloc(sizeof(char), base->cwd.size);
-	if (base->cwd.path == NULL)
-		return (MALLOC_ERROR);
-	return (SUCCES);
+	getcwd(base->cwd, PATH_MAX);
+	if (errno != 0)
+	{
+		perror(strerror(errno));
+		return (1);
+	}
+	return (0);
 }

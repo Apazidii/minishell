@@ -7,6 +7,7 @@ int main(int agrc, char *argv[], char *envp[]) {
 	int		error_code;
 
 	ft_bzero(&base, sizeof(base));
+
 	base.env_lst = parse_envp(envp);
 //	if (errno != 0)
 //		//обработка ошибок
@@ -64,10 +65,7 @@ int main(int agrc, char *argv[], char *envp[]) {
 
 //int main()
 //{
-//	char **s = malloc(sizeof(char *) * 4);
-//	s[0] = "echo";
-//	s[1] = "";
-//	s[2] = "world";
-//	s[3] = NULL;
-//	echo(s, 3);
+//	t_base	base;
+//
+//	pwd(&base);
 //}

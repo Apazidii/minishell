@@ -9,6 +9,7 @@
 # include <unistd.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <limits.h>
 
 #define VALID_ERROR 1
 #define MALLOC_ERROR -1
@@ -62,8 +63,8 @@ typedef struct s_base
 
 	char	*command;
 
-	t_cwd	cwd;
-
+//	t_cwd	cwd;
+	char	cwd[PATH_MAX];
 }			t_base;
 
 typedef struct s_arg
@@ -96,6 +97,7 @@ typedef struct s_group
 
 //builtin
 void echo(char **arg, int num_arg);
+int pwd(t_base *base);
 
 
 //parser
@@ -115,6 +117,7 @@ void free_dict(void *content);
 //main
 char *read_cmd(void);
 int get_cwd(t_base *base);
+int is_space_string(char *s);
 
 
 #endif

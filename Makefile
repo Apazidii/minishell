@@ -13,6 +13,8 @@ SRC =	src/main.c						\
 		src/pre_action/pre_action.c		\
 										\
 		src/builtin/echo.c				\
+		src/builtin/pwd.c				\
+		src/builtin/cd.c				\
 										\
 		src/utils/main_utils.c
 
