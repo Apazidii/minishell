@@ -22,11 +22,38 @@ char *add_newline(char *cmd)
 	return (res);
 }
 
-char *read_cmd(void)
+
+
+char *get_promt(t_base *base)
+{
+	char *res;
+
+	if (get_cwd(base))
+		return (NULL);
+	res = ft_strjoin("\033[0;32mminishell\033[0m:\033[0;34m", base->cwd);
+	if (res == NULL)
+		return (NULL);
+	res = ft_strjoin(res, "\033[0m$ ");
+	if (res == NULL)
+	{
+		free(res);
+		return (NULL);
+	}
+	return (res);
+}
+
+char *read_cmd(t_base *base)
 {
 	char *s;
+	char *promt;
 
-	s = readline("minishell$ ");
+	promt = get_promt(base);
+	if (promt == NULL)
+	{
+		printf("Malloc error\n");
+		return (NULL);
+	}
+	s = readline(promt);
 	if (s && is_space_string(s))
 		add_history(s);
 	s = add_newline(s);

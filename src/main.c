@@ -15,11 +15,11 @@ int main(int agrc, char *argv[], char *envp[]) {
 
 	while (1)
 	{
-		base.command = read_cmd();
+		base.command = read_cmd(&base);
 		while (base.command == NULL)
 		{
 			printf("Malloc error\n");
-			base.command = read_cmd();
+			base.command = read_cmd(&base);
 		}
 
 		if (is_space_string(base.command))
@@ -39,7 +39,7 @@ int main(int agrc, char *argv[], char *envp[]) {
 				error_code = parser(base.lexer, &base);
 			if (error_code == 0)
 			{
-
+				pre_action(&base);
 			}
 			if (error_code == 1)
 			{

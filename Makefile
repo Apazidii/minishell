@@ -11,6 +11,7 @@ SRC =	src/main.c						\
 		src/parser/parser_arg.c			\
 										\
 		src/pre_action/pre_action.c		\
+		src/pre_action/pre_builtins.c	\
 										\
 		src/builtin/echo.c				\
 		src/builtin/pwd.c				\

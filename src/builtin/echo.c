@@ -1,13 +1,13 @@
 #include "minishell.h"
 
-void echo(char **arg, int num_arg)
+int echo(char **arg, int num_arg)
 {
 	int i;
 	int newline;
 
 	i = 1;
 	newline = 1;
-	if (ft_strncmp(arg[i], "-n", 2) == 0)
+	if (num_arg >= 2 && ft_strncmp(arg[i], "-n", 2) == 0)
 	{
 		newline = 0;
 		i++;
@@ -21,4 +21,5 @@ void echo(char **arg, int num_arg)
 	}
 	if (newline)
 		write(1, "\n", 1);
+	return (SUCCES);
 }

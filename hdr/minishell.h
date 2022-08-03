@@ -85,6 +85,7 @@ typedef struct s_group
 	char		*program;
 
 	t_arg		*arg;
+	char 		**arg_str;
 	int			number_arg;
 
 	t_redirect redirect;
@@ -96,9 +97,13 @@ typedef struct s_group
 
 
 //builtin
-void echo(char **arg, int num_arg);
+int echo(char **arg, int num_arg);
 int pwd(t_base *base);
+int cd(char **arg, int num_arg);
 
+//pre_action
+int chech_builtin(t_group *group, t_base *base);
+int pre_action(t_base *base);
 
 //parser
 int parser(t_list *lexer, t_base *base);
@@ -115,7 +120,7 @@ void print_content(void *content);
 void free_dict(void *content);
 
 //main
-char *read_cmd(void);
+char *read_cmd(t_base *base);
 int get_cwd(t_base *base);
 int is_space_string(char *s);
 
