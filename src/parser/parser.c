@@ -53,6 +53,6 @@ int parser(t_list *lexer, t_base *base)
 	}
 	set_pipe(all_groups);
 	base->groups = all_groups;
-//	ft_lstiter(all_groups, print_group);
+	ft_lstiter(all_groups, print_group);
 	return (SUCCES);
 }

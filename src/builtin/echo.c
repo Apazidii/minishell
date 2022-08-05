@@ -7,7 +7,12 @@ int echo(char **arg, int num_arg)
 
 	i = 1;
 	newline = 1;
-	if (num_arg >= 2 && ft_strncmp(arg[i], "-n", 2) == 0)
+	if (num_arg < 2)
+	{
+		printf("\n");
+		return (SUCCES);
+	}
+	if (ft_strncmp(arg[i], "-n", 2) == 0)
 	{
 		newline = 0;
 		i++;

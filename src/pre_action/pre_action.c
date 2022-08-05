@@ -14,7 +14,7 @@ int arg_in_arr_str(t_group *group)
 	i = 0;
 	while (i < group->number_arg)
 	{
-		group->arg_str[0] = group->arg[0].arg;
+		group->arg_str[i] = group->arg[i].arg;
 		i++;
 	}
 	return (SUCCES);

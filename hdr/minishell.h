@@ -47,14 +47,6 @@ typedef struct s_token
 	int		rep_var;
 }			t_token;
 
-
-typedef struct s_cwd
-{
-	char	*path;
-	size_t	size;
-}			t_cwd;
-
-
 typedef struct s_base
 {
 	t_list	*env_lst;
@@ -63,7 +55,6 @@ typedef struct s_base
 
 	char	*command;
 
-//	t_cwd	cwd;
 	char	cwd[PATH_MAX];
 }			t_base;
 

@@ -38,9 +38,7 @@ int main(int agrc, char *argv[], char *envp[]) {
 			if (error_code == 0)
 				error_code = parser(base.lexer, &base);
 			if (error_code == 0)
-			{
 				pre_action(&base);
-			}
 			if (error_code == 1)
 			{
 				ft_lstclear(&base.env_lst, free_dict);
@@ -50,6 +48,7 @@ int main(int agrc, char *argv[], char *envp[]) {
 				printf("Malloc error\n");
 				return (1);
 			}
+
 		}
 	}
 	rl_clear_history();

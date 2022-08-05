@@ -24,6 +24,8 @@ int check_parenthesis(t_list *lexer)
 
 int check_pipe(t_list *lexer)
 {
+
+	//Проверить на пайп после пайпа
 	while (lexer)
 	{
 		if (((t_token *)lexer->content)->type == e_pipe && \
