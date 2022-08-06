@@ -17,6 +17,8 @@ SRC =	src/main.c						\
 		src/builtin/pwd.c				\
 		src/builtin/cd.c				\
 										\
+		src/executer/executer.c			\
+										\
 		src/utils/main_utils.c
 
 

@@ -70,3 +70,4 @@ int get_cwd(t_base *base)
 	}
 	return (0);
 }
+

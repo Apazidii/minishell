@@ -26,8 +26,6 @@ int free_group(t_group *group)
 {
 	if (group == NULL)
 		return (1);
-	if (group->program != NULL)
-		free(group->program);
 	if (group->redirect.redirect_file != NULL)
 		free(group->redirect.redirect_file);
 	if (group->reverse_redirect.redirect_file != NULL)

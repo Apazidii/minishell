@@ -12,7 +12,7 @@ int parse_redirect(t_list **lexer, t_group *group, t_redirect *redirect)
 	content = ((t_token *)(*lexer)->content);
 	if (content->type != e_str)
 	{
-		printf("minishell: syntax error near unexpected token \'%.*s\'", content->len, content->token);
+		printf("minishell: syntax error near unexpected token \'%.*s\'\n", content->len, content->token);
 		return (VALID_ERROR);
 	}
 	redirect->redirect_file = ft_substr(content->token, 0, content->len);

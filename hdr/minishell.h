@@ -7,12 +7,14 @@
 # include <stdlib.h>
 # include <errno.h>
 # include <unistd.h>
+#include <sys/types.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <limits.h>
 
 #define VALID_ERROR 1
 #define MALLOC_ERROR -1
+#define FORK_ERROR -2
 #define SUCCES 0
 #define END_OF_LEXER 2
 

@@ -10,7 +10,7 @@ int pipe_or_lexer(char **command, t_list **lexer)
 
 	token = (t_token *)ft_calloc(sizeof(t_token), 1);
 	if (!token)
-		return (1);
+		return (MALLOC_ERROR);
 	token->token = *command;
 	if (*((*command) + 1) == '|')
 	{
@@ -28,10 +28,10 @@ int pipe_or_lexer(char **command, t_list **lexer)
 	if (!new)
 	{
 		free(token);
-		return (1);
+		return (MALLOC_ERROR);
 	}
 	ft_lstadd_back(lexer, new);
-	return (0);
+	return (SUCCES);
 }
 
 int redirect_lexer(char **command, t_list **lexer)
@@ -41,7 +41,7 @@ int redirect_lexer(char **command, t_list **lexer)
 
 	token = (t_token *)ft_calloc(sizeof(t_token), 1);
 	if (!token)
-		return (1);
+		return (MALLOC_ERROR);
 	token->token = *command;
 	if (*((*command) + 1) == '>')
 	{
@@ -59,10 +59,10 @@ int redirect_lexer(char **command, t_list **lexer)
 	if (!new)
 	{
 		free(token);
-		return (1);
+		return (MALLOC_ERROR);
 	}
 	ft_lstadd_back(lexer, new);
-	return (0);
+	return (SUCCES);
 }
 
 int reverse_redirect_lexer(char **command, t_list **lexer)
@@ -72,7 +72,7 @@ int reverse_redirect_lexer(char **command, t_list **lexer)
 
 	token = (t_token *)ft_calloc(sizeof(t_token), 1);
 	if (!token)
-		return (1);
+		return (MALLOC_ERROR);
 	token->token = *command;
 	if (*((*command) + 1) == '<')
 	{
@@ -90,10 +90,10 @@ int reverse_redirect_lexer(char **command, t_list **lexer)
 	if (!new)
 	{
 		free(token);
-		return (1);
+		return (MALLOC_ERROR);
 	}
 	ft_lstadd_back(lexer, new);
-	return (0);
+	return (SUCCES);
 }
 
 int and_lexer(char **command, t_list **lexer)
@@ -103,7 +103,7 @@ int and_lexer(char **command, t_list **lexer)
 
 	token = (t_token *)ft_calloc(sizeof(t_token), 1);
 	if (!token)
-		return (1);
+		return (MALLOC_ERROR);
 	token->token = *command;
 	if (*((*command) + 1) == '&')
 	{
@@ -115,10 +115,10 @@ int and_lexer(char **command, t_list **lexer)
 	if (!new)
 	{
 		free(token);
-		return (1);
+		return (MALLOC_ERROR);
 	}
 	ft_lstadd_back(lexer, new);
-	return (0);
+	return (SUCCES);
 }
 
 int parenthesis_lexer(char **command, t_list **lexer)
@@ -128,7 +128,7 @@ int parenthesis_lexer(char **command, t_list **lexer)
 
 	token = (t_token *)ft_calloc(sizeof(t_token), 1);
 	if (!token)
-		return (1);
+		return (MALLOC_ERROR);
 	token->token = *command;
 	if (**command == '(')
 	{
@@ -146,10 +146,10 @@ int parenthesis_lexer(char **command, t_list **lexer)
 	if (!new)
 	{
 		free(token);
-		return (1);
+		return (MALLOC_ERROR);
 	}
 	ft_lstadd_back(lexer, new);
-	return (0);
+	return (SUCCES);
 }
 
 int str_lexer(char **command, t_list **lexer)
@@ -161,7 +161,7 @@ int str_lexer(char **command, t_list **lexer)
 	i = 0;
 	token = (t_token *)ft_calloc(sizeof(t_token), 1);
 	if (!token)
-		return (1);
+		return (MALLOC_ERROR);
 	token->token = *command;
 	while (!is_metachar((*command)[i]) && !is_space((*command)[i]) && (*command)[i] != '\0')
 	{
@@ -177,10 +177,10 @@ int str_lexer(char **command, t_list **lexer)
 	if (!new)
 	{
 		free(token);
-		return (1);
+		return (MALLOC_ERROR);
 	}
 	ft_lstadd_back(lexer, new);
-	return (0);
+	return (SUCCES);
 }
 
 int quote_lexer(char **command, t_list **lexer)
@@ -193,7 +193,7 @@ int quote_lexer(char **command, t_list **lexer)
 	i = 0;
 	token = (t_token *)ft_calloc(sizeof(t_token), 1);
 	if (!token)
-		return (1);
+		return (MALLOC_ERROR);
 	c = **command;
 	(*command)++;
 	token->token = *command;
@@ -209,10 +209,10 @@ int quote_lexer(char **command, t_list **lexer)
 	if (!new)
 	{
 		free(token);
-		return (1);
+		return (MALLOC_ERROR);
 	}
 	ft_lstadd_back(lexer, new);
-	return (0);
+	return (SUCCES);
 }
 
 int manager_lexer(char **command, t_list **lexer)
@@ -233,7 +233,7 @@ int manager_lexer(char **command, t_list **lexer)
 		return (quote_lexer(command, lexer));
 	if (**command != '\0')
 		return (str_lexer(command, lexer));
-	return (0);
+	return (SUCCES);
 }
 
 int lexer(char *command, t_base *base)
@@ -245,17 +245,17 @@ int lexer(char *command, t_base *base)
 	if (check_qutes(command))
 	{
 		printf("Error: Quotation marks are not closed\n");
-		return (2);
+		return (VALID_ERROR);
 	}
 	while (*command != '\0')
 	{
 		if (manager_lexer(&command, &lexer))
-			return (1);
+			return (MALLOC_ERROR);
 	}
 	nl = ft_lstlast(lexer);
 	((t_token *)(nl->content))->type = e_newline;
 	base->lexer = lexer;
 //	ft_lstiter(lexer, print_token);
-	return (0);
+	return (SUCCES);
 }
 

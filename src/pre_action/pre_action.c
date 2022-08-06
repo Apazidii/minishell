@@ -31,10 +31,11 @@ int pre_action(t_base *base)
 		group = (t_group *)all_groups->content;
 		if (arg_in_arr_str(group) != SUCCES)
 			return (MALLOC_ERROR);
-		if (chech_builtin(group, base) == SUCCES)
+		if (chech_builtin(group, base) != SUCCES)
 			return (SUCCES);
 		all_groups = all_groups->next;
 	}
+	return (SUCCES);
 }
 
 
