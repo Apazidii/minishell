@@ -8,14 +8,23 @@
 # include <errno.h>
 # include <unistd.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <limits.h>
+#include <dirent.h>
+#include <signal.h>
+
 
 #define VALID_ERROR 1
 #define MALLOC_ERROR -1
 #define FORK_ERROR -2
 #define SUCCES 0
+#define ENV_NOT_FOUND -405
+#define DIR_ERROR -3
+#define DIR_NOT_FOUND -42
+#define NOT_FOUND -404
+#define EXEC_ERROR -5
 #define END_OF_LEXER 2
 
 
@@ -52,8 +61,12 @@ typedef struct s_token
 typedef struct s_base
 {
 	t_list	*env_lst;
+	char 	**env_arr;
+
 	t_list	*lexer;
 	t_list	*groups;
+
+	pid_t *pid;
 
 	char	*command;
 
@@ -68,7 +81,7 @@ typedef struct s_arg
 
 typedef struct s_redirect
 {
-	int			use_redirect;
+	int 		rep_var;
 	enum e_type	type_redirect;
 	char		*redirect_file;
 }				t_redirect;
@@ -81,13 +94,20 @@ typedef struct s_group
 	char 		**arg_str;
 	int			number_arg;
 
-	t_redirect redirect;
-	t_redirect reverse_redirect;
+//	t_redirect redirect;
+//	t_redirect reverse_redirect;
+
+	t_redirect	*redirect;
+	int 		number_redirect;
+
+	int			use_fork;
 
 	int 		pipe_input;
 	int 		pipe_output;
 }			t_group;
 
+//executer
+int executer(t_group *group, t_base *base);
 
 //builtin
 int echo(char **arg, int num_arg);
@@ -117,5 +137,13 @@ char *read_cmd(t_base *base);
 int get_cwd(t_base *base);
 int is_space_string(char *s);
 
+
+//env
+char	*find_in_env(t_list *env, char *key);
+
+
+//free
+int free_arr(char **s);
+int free_one(void *k);
 
 #endif

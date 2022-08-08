@@ -1,25 +1,32 @@
-SRC =	src/main.c						\
-		src/dict/dict_utils.c			\
-										\
-		src/lexer/lexer.c				\
-		src/lexer/lexer_utils.c			\
-										\
-		src/parser/parser.c				\
-		src/parser/parser_utils.c		\
-		src/parser/parser_free.c		\
-		src/parser/parser_redirect.c	\
-		src/parser/parser_arg.c			\
-										\
-		src/pre_action/pre_action.c		\
-		src/pre_action/pre_builtins.c	\
-										\
-		src/builtin/echo.c				\
-		src/builtin/pwd.c				\
-		src/builtin/cd.c				\
-										\
-		src/executer/executer.c			\
-										\
-		src/utils/main_utils.c
+SRC =	src/main.c							\
+		src/dict/dict_utils.c				\
+											\
+		src/lexer/lexer.c					\
+		src/lexer/lexer_utils.c				\
+											\
+		src/parser/parser.c					\
+		src/parser/parser_utils.c			\
+		src/parser/parser_free.c			\
+		src/parser/parser_redirect.c		\
+		src/parser/parser_arg.c				\
+											\
+		src/pre_action/pre_action.c			\
+		src/pre_action/pre_action_fork.c	\
+		src/pre_action/pre_action_utils.c	\
+											\
+		src/pre_action/pre_builtins.c		\
+											\
+		src/builtin/echo.c					\
+		src/builtin/pwd.c					\
+		src/builtin/cd.c					\
+											\
+		src/executer/executer.c				\
+        src/executer/executer_utils.c		\
+											\
+		src/utils/main_utils.c				\
+		src/utils/env_utils.c				\
+											\
+		src/signal/signal.c
 
 
 

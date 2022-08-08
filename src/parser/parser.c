@@ -16,7 +16,7 @@ int group_parser(t_list **lexer, t_group **gr)
 	}
 	while (((t_token *)((*lexer)->content))->type != e_newline && ((t_token *)((*lexer)->content))->type != e_pipe)
 	{
-		error_code = manager_redirect(lexer, *gr);
+		error_code = parse_redirect(lexer, *gr);
 		if (error_code != SUCCES)
 			return (error_code);
 		error_code = parse_arg(lexer, *gr);

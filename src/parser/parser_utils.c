@@ -51,6 +51,7 @@ void set_pipe(t_list *group)
 
 void print_group(void *content)
 {
+//	char *red[] = {"qwe", "redire"};
 	t_group *group = (t_group *)content;
 	int		i;
 
@@ -61,10 +62,16 @@ void print_group(void *content)
 	while (++i < group->number_arg)
 		printf("%s ", group->arg[i].arg);
 	printf("\n\n");
-	if (group->redirect.use_redirect)
-		printf("\t\t\tredirect file: %s\n", group->redirect.redirect_file);
-	if (group->reverse_redirect.use_redirect)
-		printf("\t\t\treverse redirect file: %s\n", group->reverse_redirect.redirect_file);
+	if (group->number_redirect != 0)
+	{
+		printf("\t\t\tredirect:\n");
+		i = 0;
+		while(i < group->number_redirect)
+		{
+			printf("\t\t\t\ttype = %d file = %s\n", group->redirect[i].type_redirect, group->redirect[i].redirect_file);
+			i++;
+		}
+	}
 	printf("\n");
 	printf("--------------------------------------------------------------------\n");
 }

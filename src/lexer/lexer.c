@@ -12,18 +12,18 @@ int pipe_or_lexer(char **command, t_list **lexer)
 	if (!token)
 		return (MALLOC_ERROR);
 	token->token = *command;
-	if (*((*command) + 1) == '|')
-	{
-		token->type = e_or;
-		token->len = 2;
-		*command += 2;
-	}
-	else
-	{
+//	if (*((*command) + 1) == '|')
+//	{
+//		token->type = e_or;
+//		token->len = 2;
+//		*command += 2;
+//	}
+//	else
+//	{
 		token->type = e_pipe;
 		token->len = 1;
 		*command += 1;
-	}
+//	}
 	new = ft_lstnew((void *)token);
 	if (!new)
 	{
@@ -165,8 +165,8 @@ int str_lexer(char **command, t_list **lexer)
 	token->token = *command;
 	while (!is_metachar((*command)[i]) && !is_space((*command)[i]) && (*command)[i] != '\0')
 	{
-		if ((*command)[i] == '&' && (*command)[i + 1] == '&')
-			break;
+//		if ((*command)[i] == '&' && (*command)[i + 1] == '&')
+//			break;
 		i++;
 	}
 	token->len = i;
@@ -225,10 +225,10 @@ int manager_lexer(char **command, t_list **lexer)
 		return (redirect_lexer(command, lexer));
 	if (**command == '<')
 		return (reverse_redirect_lexer(command, lexer));
-	if (**command == '(' || **command == ')')
-		return (parenthesis_lexer(command, lexer));
-	if (**command == '&' && *((*command) + 1) == '&')
-		return (and_lexer(command, lexer));
+//	if (**command == '(' || **command == ')')
+//		return (parenthesis_lexer(command, lexer));
+//	if (**command == '&' && *((*command) + 1) == '&')
+//		return (and_lexer(command, lexer));
 	if (**command == '\'' || **command == '"')
 		return (quote_lexer(command, lexer));
 	if (**command != '\0')
