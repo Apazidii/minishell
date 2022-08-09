@@ -19,4 +19,5 @@ char *find_in_env(t_list *env, char *key)
 int	insert_var(char **str, t_list *env)
 {
 
+	return (SUCCES);
 }

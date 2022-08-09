@@ -13,6 +13,7 @@ SRC =	src/main.c							\
 		src/pre_action/pre_action.c			\
 		src/pre_action/pre_action_fork.c	\
 		src/pre_action/pre_action_utils.c	\
+		src/pre_action/redirect.c			\
 											\
 		src/pre_action/pre_builtins.c		\
 											\
@@ -61,6 +62,11 @@ clean:
 fclean:		clean
 	@make -C $(LIBFTDIR) fclean
 	$(RM) $(NAME)
+
+flcean:		clean
+	@make -C $(LIBFTDIR) fclean
+	$(RM) $(NAME)
+
 
 re:			fclean all
 

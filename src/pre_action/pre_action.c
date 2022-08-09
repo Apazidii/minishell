@@ -1,7 +1,7 @@
 #include "minishell.h"
 #include "pre_action.h"
 
-int arg_in_arr_str(t_group *group)
+int arg_in_arr_str(t_group *group, t_list *env)
 {
 	int i;
 
@@ -18,6 +18,8 @@ int arg_in_arr_str(t_group *group)
 	while (i < group->number_arg)
 	{
 		group->arg_str[i] = group->arg[i].arg;
+		if (insert_var(&(group->arg_str[i]), env) != SUCCES)
+			return (MALLOC_ERROR);
 		i++;
 	}
 	group->arg_str[i] == NULL;

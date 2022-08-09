@@ -1,11 +1,17 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
 
 int main()
 {
-	printf("\033[0;31m"); //Set the text to the color red
-	printf("Hello\n"); //Display Hello in red
-	printf("\033[0m"); //Resets the text to default color
-	printf("Hello\n"); //Display Hello in red
+	int buf = dup(1);
+
+	int fd1 = open("wwwasw", O_RDWR | O_CREAT, 0644);
+	int fd2 = open("wwwasw", O_RDWR | O_CREAT, 0644);
+	printf("%d %d\n", fd1, fd2);
 
 }

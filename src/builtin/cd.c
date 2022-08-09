@@ -6,7 +6,7 @@ int cd(char **arg, int num_arg)
 		printf("minishell: cd: too many arguments");
 	if (chdir(arg[1]) == -1)
 	{
-		perror(strerror(errno));
+		printf("cd: %s: %s\n", arg[1], strerror(errno));
 		errno = 0;
 		return (-1);
 	}

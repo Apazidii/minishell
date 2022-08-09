@@ -8,6 +8,8 @@
 # include <errno.h>
 # include <unistd.h>
 #include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <sys/wait.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -25,6 +27,7 @@
 #define DIR_NOT_FOUND -42
 #define NOT_FOUND -404
 #define EXEC_ERROR -5
+#define FILE_ERROR -21
 #define END_OF_LEXER 2
 
 
@@ -100,6 +103,15 @@ typedef struct s_group
 	t_redirect	*redirect;
 	int 		number_redirect;
 
+	t_redirect	*reverse_redirect;
+	int 		number_reverse_redirect;
+
+
+	int 		fd_redirect;
+	int 		fd_reverse_redirect;
+	int 		buf_sr_fd;
+	int 		buf_rr_fd;
+
 	int			use_fork;
 
 	int 		pipe_input;
@@ -136,6 +148,8 @@ void free_dict(void *content);
 char *read_cmd(t_base *base);
 int get_cwd(t_base *base);
 int is_space_string(char *s);
+
+int	insert_var(char **str, t_list *env);
 
 
 //env
