@@ -54,10 +54,10 @@ int pre_action(t_base *base)
 	}
 	while (i)
 	{
-		waitpid(base->pid[i--], &status, 0);
-//		printf("_%d_\n", WEXITSTATUS(status));
-		if (WEXITSTATUS(status) != SUCCES && kill_pid(base))
+		waitpid(base->pid[--i], &status, 0);
+		if (WEXITSTATUS(status) != SUCCES && kill_pid(base) && free_one(base->pid))
 			return (WEXITSTATUS(status));
 	}
+	free_one(base->pid);
 	return (SUCCES);
 }

@@ -6,12 +6,14 @@
 #include <fcntl.h>
 
 
+
 int main()
 {
-	int buf = dup(1);
+	int buf = dup(0);
 
-	int fd1 = open("wwwasw", O_RDWR | O_CREAT, 0644);
-	int fd2 = open("wwwasw", O_RDWR | O_CREAT, 0644);
-	printf("%d %d\n", fd1, fd2);
+	int fd;
+
+	dup2(0, 1);
+	write(0, "123", 3);
 
 }

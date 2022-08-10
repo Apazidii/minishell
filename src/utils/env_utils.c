@@ -16,8 +16,50 @@ char *find_in_env(t_list *env, char *key)
 	return (NULL);
 }
 
+char *find_in_l_env(t_list *env, char *key, int l)
+{
+	t_dict *c;
+
+	while (env)
+	{
+		c = (t_dict *)env->content;
+		if (ft_strncmp(c->key, key, l) == 0)
+			return (c->value);
+		env = env->next;
+	}
+	return (NULL);
+}
+
+//char *add_env(char *res, char *s, )
+
+//123OLGA.456$Z.789$
+
+//123
+//USER.456
+//Z.789
+
+int len_key(char *s)
+{
+	int i;
+
+	i = 0;
+	while (ft_isalnum(s[i]) || s[i] == '_')
+		i++;
+	return (i);
+}
+
+char *get_value(char *s, t_list *env)
+{
+	int l;
+
+	l = len_key(s);
+	return (find_in_l_env(env, s, l));
+}
+
+
+
+
 int	insert_var(char **str, t_list *env)
 {
-
 	return (SUCCES);
 }

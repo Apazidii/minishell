@@ -17,23 +17,22 @@ int straight_redirect(t_group *group, t_list *env, t_redirect *redirect, int num
 		group->buf_sr_fd = -2;
 		return (SUCCES);
 	}
-	while(i < number_redirect - 1)
+	while(i < number_redirect)
 	{
-		if (redirect[i].type_redirect == e_redirect || redirect[i].type_redirect == e_double_redirect)
-			fd = open(redirect[i].redirect_file, O_RDWR | O_CREAT);
+		if (insert_var(&(redirect[i].redirect_file), env) != SUCCES)
+			return (MALLOC_ERROR);
+		if (redirect[i].type_redirect == e_redirect)
+			fd = open(redirect[i].redirect_file, O_CREAT | O_WRONLY | O_TRUNC,  0644);
+		else if (redirect[i].type_redirect == e_double_redirect)
+			fd = open(redirect[i].redirect_file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 		if (fd == -1)
+		{
+			perror(redirect[i].redirect_file);
 			return (FILE_ERROR);
-		close(fd);
+		}
+		if (i != number_redirect - 1)
+			close(fd);
 		i++;
-	}
-	if (redirect[i].type_redirect == e_redirect)
-		fd = open(redirect[i].redirect_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	else if (redirect[i].type_redirect == e_double_redirect)
-		fd = open(redirect[i].redirect_file,	O_CREAT | O_WRONLY | O_APPEND, 0644);
-	if (fd == -1)
-	{
-		perror(redirect[i].redirect_file);
-		return (FILE_ERROR);
 	}
 	group->fd_redirect = fd;
 	group->buf_sr_fd = dup(1);
@@ -53,10 +52,12 @@ int reverse_redirect(t_group *group, t_list *env, t_redirect *redirect, int numb
 		group->buf_rr_fd = -2;
 		return (SUCCES);
 	}
-	while(i < number_redirect - 1)
+	while(i < number_redirect)
 	{
+		if (insert_var(&(redirect[i].redirect_file), env) != SUCCES)
+			return (MALLOC_ERROR);
 		if (redirect[i].type_redirect == e_reverse_redirect)
-			fd = open(redirect[i].redirect_file, O_RDWR);
+			fd = open(redirect[i].redirect_file, O_RDONLY,  0644);
 		else if (redirect[i].type_redirect == e_double_reverse_redirect)
 			fd = heredoc();
 		if (fd == -1)
@@ -64,17 +65,9 @@ int reverse_redirect(t_group *group, t_list *env, t_redirect *redirect, int numb
 			perror(redirect[i].redirect_file);
 			return (FILE_ERROR);
 		}
-		close(fd);
+		if (i != number_redirect - 1)
+			close(fd);
 		i++;
-	}
-	if (redirect[i].type_redirect == e_reverse_redirect)
-		fd = open(redirect[i].redirect_file, O_RDWR);
-	else if (redirect[i].type_redirect == e_double_reverse_redirect)
-		fd = heredoc();
-	if (fd == -1)
-	{
-		perror(redirect[i].redirect_file);
-		return (FILE_ERROR);
 	}
 	group->fd_reverse_redirect = fd;
 	group->buf_rr_fd = dup(0);
