@@ -28,6 +28,7 @@
 #define NOT_FOUND -404
 #define EXEC_ERROR -5
 #define FILE_ERROR -21
+#define DUP_ERROR -69
 #define END_OF_LEXER 2
 
 

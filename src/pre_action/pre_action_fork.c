@@ -17,21 +17,37 @@
 //	return (SUCCES);
 //}
 
+int return_fd(int buf_fd, int fd)
+{
+	if (buf_fd != -2)
+	{
+		if (dup2(buf_fd, fd) == -1)
+		{
+			close(buf_fd);
+			perror("dup");
+			return (DUP_ERROR);
+		}
+		close(buf_fd);
+	}
+	return (SUCCES);
+}
+
 int run_command(t_group *group, t_base *base)
 {
 	int error_code;
 
-
-	redirect(group, base->env_lst);
-	error_code = arg_in_arr_str(group, base->env_lst);
+	error_code = redirect(group, base->env_lst);
+	if (error_code == SUCCES)
+		error_code = arg_in_arr_str(group, base->env_lst);
 	if (error_code == SUCCES)
 		error_code = chech_builtin(group, base);
 	if (error_code == NOT_FOUND)
 		error_code = run_exec(base, group->program, group->arg_str);
-	dup2(group->buf_sr_fd, 1);
-	dup2(group->buf_rr_fd, 0);
-	close(group->buf_sr_fd);
-	close(group->buf_rr_fd);
+	if (error_code == SUCCES)
+		error_code = return_fd(group->buf_sr_fd, 1);
+	if (error_code == SUCCES)
+		error_code = return_fd(group->buf_sr_fd, 0);
+
 	return (error_code);
 }
 

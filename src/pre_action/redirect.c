@@ -1,6 +1,26 @@
 #include <minishell.h>
 #include <pre_action.h>
 
+
+int replace_fd(int *buf_fd, int fd, int newfd)
+{
+	*buf_fd = dup(newfd);
+	if (*buf_fd == -1)
+	{
+		close(fd);
+		perror("dup");
+		return (DUP_ERROR);
+	}
+	if (dup2(fd, newfd) == -1)
+	{
+		close(fd);
+		perror("dup");
+		return (DUP_ERROR);
+	}
+	close(fd);
+	return (SUCCES);
+}
+
 int heredoc()
 {
 	return (1);
@@ -28,17 +48,14 @@ int straight_redirect(t_group *group, t_list *env, t_redirect *redirect, int num
 		if (fd == -1)
 		{
 			perror(redirect[i].redirect_file);
+			errno = 0;
 			return (FILE_ERROR);
 		}
 		if (i != number_redirect - 1)
 			close(fd);
 		i++;
 	}
-	group->fd_redirect = fd;
-	group->buf_sr_fd = dup(1);
-	dup2(fd, 1);
-	close(fd);
-	return (SUCCES);
+	return (replace_fd(&group->buf_sr_fd, fd, 1));
 }
 
 int reverse_redirect(t_group *group, t_list *env, t_redirect *redirect, int number_redirect)
@@ -63,23 +80,26 @@ int reverse_redirect(t_group *group, t_list *env, t_redirect *redirect, int numb
 		if (fd == -1)
 		{
 			perror(redirect[i].redirect_file);
+			errno = 0;
 			return (FILE_ERROR);
 		}
 		if (i != number_redirect - 1)
 			close(fd);
 		i++;
 	}
-	group->fd_reverse_redirect = fd;
-	group->buf_rr_fd = dup(0);
-	dup2(fd, 0);
-	close(fd);
-	return (SUCCES);
+	return (replace_fd(&group->buf_rr_fd, fd, 0));
 }
 
 
 int redirect(t_group *group, t_list *env)
 {
-	//add env to redirect file
-	straight_redirect(group, env, group->redirect, group->number_redirect);
-	reverse_redirect(group, env, group->reverse_redirect, group->number_reverse_redirect);
+	int error_code;
+
+	error_code = straight_redirect(group, env, group->redirect, group->number_redirect);
+	if (error_code != SUCCES)
+		return (error_code);
+	error_code = reverse_redirect(group, env, group->reverse_redirect, group->number_reverse_redirect);
+	if (error_code != SUCCES)
+		return (error_code);
+	return (error_code);
 }
