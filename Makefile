@@ -14,6 +14,10 @@ SRC =	src/main.c							\
 		src/pre_action/pre_action_fork.c	\
 		src/pre_action/pre_action_utils.c	\
 		src/pre_action/redirect.c			\
+		src/pre_action/heredoc.c			\
+		src/pre_action/dup.c				\
+											\
+		src/pipe/pipe.c						\
 											\
 		src/pre_action/pre_builtins.c		\
 											\

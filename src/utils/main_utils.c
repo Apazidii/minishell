@@ -49,10 +49,7 @@ char *read_cmd(t_base *base)
 
 	promt = get_promt(base);
 	if (promt == NULL)
-	{
-		printf("Malloc error\n");
 		return (NULL);
-	}
 	s = readline(promt);
 	free(promt);
 	if (s && is_space_string(s))

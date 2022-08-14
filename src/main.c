@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-int find_bin(t_list *env, char *bin, char **res);
 
 
 int main(int agrc, char *argv[], char *envp[]) {
@@ -22,7 +21,7 @@ int main(int agrc, char *argv[], char *envp[]) {
 		base.command = read_cmd(&base);
 		while (base.command == NULL)
 		{
-			printf("Malloc error\n");
+			perror("readline");
 			base.command = read_cmd(&base);
 		}
 
@@ -51,6 +50,7 @@ int main(int agrc, char *argv[], char *envp[]) {
 			if (error_code == MALLOC_ERROR)
 			{
 				printf("Malloc error\n");
+				errno = 0;
 				break;
 			}
 		}

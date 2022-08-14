@@ -9,11 +9,9 @@
 
 int main()
 {
-	int buf = dup(0);
-
 	int fd;
+	int k;
 
-	dup2(0, 1);
-	write(0, "123", 3);
+	k = 123;
 
 }

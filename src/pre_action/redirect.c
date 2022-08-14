@@ -1,31 +1,6 @@
 #include <minishell.h>
 #include <pre_action.h>
 
-
-int replace_fd(int *buf_fd, int fd, int newfd)
-{
-	*buf_fd = dup(newfd);
-	if (*buf_fd == -1)
-	{
-		close(fd);
-		perror("dup");
-		return (DUP_ERROR);
-	}
-	if (dup2(fd, newfd) == -1)
-	{
-		close(fd);
-		perror("dup");
-		return (DUP_ERROR);
-	}
-	close(fd);
-	return (SUCCES);
-}
-
-int heredoc()
-{
-	return (1);
-}
-
 int straight_redirect(t_group *group, t_list *env, t_redirect *redirect, int number_redirect)
 {
 	int i;
@@ -62,6 +37,7 @@ int reverse_redirect(t_group *group, t_list *env, t_redirect *redirect, int numb
 {
 	int i;
 	int fd;
+	int error_code;
 
 	i = 0;
 	if (number_redirect == 0)
@@ -71,12 +47,17 @@ int reverse_redirect(t_group *group, t_list *env, t_redirect *redirect, int numb
 	}
 	while(i < number_redirect)
 	{
-		if (insert_var(&(redirect[i].redirect_file), env) != SUCCES)
-			return (MALLOC_ERROR);
+		if (redirect[i].type_redirect != e_double_reverse_redirect)
+			if (insert_var(&(redirect[i].redirect_file), env) != SUCCES)
+				return (MALLOC_ERROR);
 		if (redirect[i].type_redirect == e_reverse_redirect)
 			fd = open(redirect[i].redirect_file, O_RDONLY,  0644);
 		else if (redirect[i].type_redirect == e_double_reverse_redirect)
-			fd = heredoc();
+		{
+			error_code = heredoc(&fd, redirect[i].redirect_file, env);
+			if (error_code != SUCCES)
+				return (error_code);
+		}
 		if (fd == -1)
 		{
 			perror(redirect[i].redirect_file);

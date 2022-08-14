@@ -36,8 +36,9 @@ int pre_action(t_base *base)
 
 	all_groups = base->groups;
 
-	if (ft_lstsize(all_groups) == 1 && is_builtin(all_groups->content))
-		return (run_command(all_groups->content, base));
+	//DELETE
+	int pid = getpid();
+	//DELETE
 
 	base->pid = ft_calloc(sizeof (pid_t), ft_lstsize(base->groups));
 	if (base->pid == NULL)
@@ -45,10 +46,37 @@ int pre_action(t_base *base)
 	i = 0;
 	while (all_groups)
 	{
+
+		if (init_pipe(all_groups, all_groups->next, base) != SUCCES)
+			return (PIPE_ERROR);
+
+
+		error_code = replace_fd_group(all_groups->content);
+		if (error_code != SUCCES && kill_pid(base) && free_one(base->pid))
+			return (error_code);
+
+
+
+		error_code = redirect(all_groups->content, base->env_lst);
+		if (error_code != SUCCES && kill_pid(base) && free_one(base->pid))
+			return (error_code);
+
+
+
+		if (ft_lstsize(all_groups) == 1 && is_builtin(all_groups->content))
+		{
+			error_code = run_command(all_groups->content, base);
+			free(base->pid);
+			return (error_code);
+		}
+
+
 		group = (t_group *)all_groups->content;
 		error_code = apply_fork(group, base, i);
-		if (error_code != SUCCES && kill_pid(base))
+		return_fd_group(group);
+		if (error_code != SUCCES && kill_pid(base) && free_one(base->pid))
 			return (error_code);
+
 		all_groups = all_groups->next;
 		i++;
 	}

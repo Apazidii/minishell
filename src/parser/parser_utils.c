@@ -39,15 +39,6 @@ int check_pipe(t_list *lexer)
 	return (0);
 }
 
-void set_pipe(t_list *group)
-{
-	while (group)
-	{
-		if (((t_group *)group->content)->pipe_output)
-			((t_group *)group->next->content)->pipe_input = 1;
-		group = group->next;
-	}
-}
 
 void print_group(void *content)
 {

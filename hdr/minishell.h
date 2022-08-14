@@ -29,6 +29,7 @@
 #define EXEC_ERROR -5
 #define FILE_ERROR -21
 #define DUP_ERROR -69
+#define PIPE_ERROR -10
 #define END_OF_LEXER 2
 
 
@@ -115,8 +116,10 @@ typedef struct s_group
 
 	int			use_fork;
 
-	int 		pipe_input;
-	int 		pipe_output;
+	int 		pipe_input_buf;
+	int 		pipe_input[2];
+	int 		pipe_output_buf;
+	int 		pipe_output[2];
 }			t_group;
 
 //executer

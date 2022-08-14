@@ -23,8 +23,13 @@ int group_parser(t_list **lexer, t_group **gr)
 		if (error_code != SUCCES)
 			return (error_code);
 	}
-	if (((t_token *)((*lexer)->content))->type == e_pipe)
-		(*gr)->pipe_output = 1;
+	(*gr)->pipe_input_buf = -2;
+	(*gr)->pipe_output_buf = -2;
+
+	(*gr)->pipe_input[0] = -2;
+	(*gr)->pipe_input[1] = -2;
+	(*gr)->pipe_output[0] = -2;
+	(*gr)->pipe_output[1] = -2;
 	*lexer = (*lexer)->next;
 	return (SUCCES);
 }
@@ -48,7 +53,7 @@ int parser(t_list *lexer, t_base *base)
 		}
 		ft_lstadd_back(&all_groups, ft_lstnew((void *)group));
 	}
-	set_pipe(all_groups);
+//	set_pipe(all_groups);
 	base->groups = all_groups;
 //	ft_lstiter(all_groups, print_group);
 	return (SUCCES);

@@ -1,40 +1,12 @@
 #include "minishell.h"
 #include "pre_action.h"
 
-//int run_command(t_group *group, t_base *base)
-//{
-//	int error_code;
-//
-//
-//	//redirect
-//	if (arg_in_arr_str(group, base->env_lst) != SUCCES)
-//		return (MALLOC_ERROR);
-//	error_code = chech_builtin(group, base);
-//	if (error_code == NOT_FOUND)
-//		error_code = run_exec(base, group->program, group->arg_str);
-//	if (error_code != SUCCES)
-//		return (EXEC_ERROR);
-//	return (SUCCES);
-//}
-
-int return_fd(int buf_fd, int fd)
-{
-	if (buf_fd != -2)
-	{
-		if (dup2(buf_fd, fd) == -1)
-		{
-			close(buf_fd);
-			perror("dup");
-			return (DUP_ERROR);
-		}
-		close(buf_fd);
-	}
-	return (SUCCES);
-}
 
 int run_command(t_group *group, t_base *base)
 {
 	int error_code;
+
+	close_unused_fd(group);
 
 	error_code = redirect(group, base->env_lst);
 	if (error_code == SUCCES)
@@ -43,10 +15,6 @@ int run_command(t_group *group, t_base *base)
 		error_code = chech_builtin(group, base);
 	if (error_code == NOT_FOUND)
 		error_code = run_exec(base, group->program, group->arg_str);
-	if (error_code == SUCCES)
-		error_code = return_fd(group->buf_sr_fd, 1);
-	if (error_code == SUCCES)
-		error_code = return_fd(group->buf_sr_fd, 0);
 
 	return (error_code);
 }
