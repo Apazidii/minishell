@@ -4,14 +4,12 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-
+#include <errno.h>
 
 
 int main()
 {
-	int fd;
-	int k;
-
-	k = 123;
-
+	int k =	execve("qwe", NULL, 0);
+	printf("%d\n",errno);
+	perror("my");
 }

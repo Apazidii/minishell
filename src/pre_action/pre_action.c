@@ -36,10 +36,6 @@ int pre_action(t_base *base)
 
 	all_groups = base->groups;
 
-	//DELETE
-	int pid = getpid();
-	//DELETE
-
 	base->pid = ft_calloc(sizeof (pid_t), ft_lstsize(base->groups));
 	if (base->pid == NULL)
 		return (MALLOC_ERROR);

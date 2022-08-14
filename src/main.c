@@ -47,6 +47,9 @@ int main(int agrc, char *argv[], char *envp[]) {
 			ft_lstclear(&base.lexer, free_token);
 			ft_lstclear(&base.groups, free_group_list);
 			free(base.command);
+			printf("_%d_\n", errno);
+			perror("main");
+			errno = 0;
 			if (error_code == MALLOC_ERROR)
 			{
 				printf("Malloc error\n");

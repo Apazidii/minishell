@@ -52,6 +52,7 @@ void close_unused_fd(t_group *group)
 		group->pipe_output[1] = -2;
 	group->pipe_input[1] = -2;
 	group->pipe_output[0] = -2;
+	errno = 0;
 }
 
 int replace_fd_group(t_group *group)

@@ -14,6 +14,8 @@ int kill_pid(t_base *base)
 			kill(base->pid[i], SIGKILL);
 		i++;
 	}
+	if (errno == 3)
+		errno = 0;
 	return (1);
 }
 
