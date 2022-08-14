@@ -42,11 +42,11 @@ int replace_fd(int *buf_fd, int fd, int newfd)
 
 void close_unused_fd(t_group *group)
 {
-	if (group->pipe_input[1] != 0)
+	if (group->pipe_input[1] != -2)
 		close(group->pipe_input[1]);
 	else
 		group->pipe_input[0] = -2;
-	if (group->pipe_output[0] != 0)
+	if (group->pipe_output[0] != -2)
 		close(group->pipe_output[0]);
 	else
 		group->pipe_output[1] = -2;

@@ -7,7 +7,6 @@ int run_exec(t_base *base, char *bin, char **arg)
 {
 	char *pbin;
 	int error_code;
-
 	error_code = find_bin(base->env_lst, bin, &pbin);
 	if (error_code != SUCCES)
 		return (error_code);

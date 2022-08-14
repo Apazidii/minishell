@@ -52,7 +52,7 @@ int check_bin(char *path, char *bin)
 	closedir(dir);
 	if (errno != 0)
 	{
-		perror(strerror(errno));
+		perror("closedir");
 		errno = 0;
 		return (DIR_ERROR);
 	}

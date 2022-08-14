@@ -8,9 +8,9 @@ int run_command(t_group *group, t_base *base)
 
 	close_unused_fd(group);
 
-	error_code = redirect(group, base->env_lst);
-	if (error_code == SUCCES)
-		error_code = arg_in_arr_str(group, base->env_lst);
+//	error_code = redirect(group, base->env_lst);
+//	if (error_code == SUCCES)
+	error_code = arg_in_arr_str(group, base->env_lst);
 	if (error_code == SUCCES)
 		error_code = chech_builtin(group, base);
 	if (error_code == NOT_FOUND)
