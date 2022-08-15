@@ -18,19 +18,20 @@
 #include <signal.h>
 
 
-#define VALID_ERROR 1
-#define MALLOC_ERROR -1
-#define FORK_ERROR -2
-#define SUCCES 0
-#define ENV_NOT_FOUND -405
-#define DIR_ERROR -3
-#define DIR_NOT_FOUND -42
-#define NOT_FOUND -404
-#define EXEC_ERROR -5
-#define FILE_ERROR -21
-#define DUP_ERROR -69
-#define PIPE_ERROR -10
-#define END_OF_LEXER 2
+#define MALLOC_ERROR	42
+#define DIR_NOT_FOUND	127
+#define EXEC_ERROR		126
+#define FORK_ERROR		10
+#define ENV_NOT_FOUND	1
+#define DIR_ERROR		1
+#define NOT_FOUND		404
+#define FILE_ERROR		2
+#define DUP_ERROR		1
+#define PIPE_ERROR		1
+#define END_OF_LEXER	1
+#define BUILTIN_ERROR	2
+#define VALID_ERROR		2
+#define SUCCES			0
 
 
 enum e_type
@@ -67,6 +68,7 @@ typedef struct s_base
 {
 	t_list	*env_lst;
 	char 	**env_arr;
+	int 	exit_status;
 
 	t_list	*lexer;
 	t_list	*groups;
@@ -133,6 +135,7 @@ int cd(char **arg, int num_arg);
 //pre_action
 int chech_builtin(t_group *group, t_base *base);
 int pre_action(t_base *base);
+int kill_pid(t_base *base);
 
 //parser
 int parser(t_list *lexer, t_base *base);
@@ -149,15 +152,20 @@ void print_content(void *content);
 void free_dict(void *content);
 
 //main
-char *read_cmd(t_base *base);
+char *read_cmd(t_base *base, int *eof);
 int get_cwd(t_base *base);
 int is_space_string(char *s);
+
+char *get_promt(t_base *base);
 
 int	insert_var(char **str, t_list *env);
 
 
 //env
 char	*find_in_env(t_list *env, char *key);
+
+//signal
+void sig_int(int k);
 
 
 //free

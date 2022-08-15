@@ -33,9 +33,7 @@ int apply_fork(t_group *group, t_base *base, int i)
 	if (base->pid[i] == 0)
 	{
 		error_code = run_command(group, base);
-		if (error_code != SUCCES)
-			exit(1);
-		exit(0);
+		exit(error_code);
 	}
 	else
 		return (SUCCES);

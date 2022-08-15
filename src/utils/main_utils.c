@@ -42,17 +42,23 @@ char *get_promt(t_base *base)
 	return (res);
 }
 
-char *read_cmd(t_base *base)
+char *read_cmd(t_base *base, int *eof)
 {
 	char *s;
 	char *promt;
 
+	*eof = 0;
 	promt = get_promt(base);
 	if (promt == NULL)
 		return (NULL);
 	s = readline(promt);
 	free(promt);
-	if (s && is_space_string(s))
+	if (s == NULL)
+	{
+		*eof = 1;
+		return (NULL);
+	}
+	if (is_space_string(s))
 		add_history(s);
 	s = add_newline(s);
 	return (s);

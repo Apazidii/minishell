@@ -3,7 +3,7 @@
 int pwd(t_base *base)
 {
 	if (get_cwd(base))
-		return (-1);
+		return (BUILTIN_ERROR);
 	printf("%s\n", base->cwd);
-	return (0);
+	return (SUCCES);
 }

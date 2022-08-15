@@ -5,6 +5,7 @@
 int main(int agrc, char *argv[], char *envp[]) {
 	t_base	base;
 	int		error_code;
+	int		eof;
 
 	ft_bzero(&base, sizeof(base));
 	base.env_arr = envp;
@@ -14,17 +15,21 @@ int main(int agrc, char *argv[], char *envp[]) {
 //	ft_lstiter(env_lst, print_content);
 
 
+	signal(SIGINT, sig_int);
 
 
 	while (1)
 	{
-		base.command = read_cmd(&base);
+		base.command = read_cmd(&base, &eof);
 		while (base.command == NULL)
 		{
+			if (eof == 1)
+				break;
 			perror("readline");
-			base.command = read_cmd(&base);
+			base.command = read_cmd(&base, &eof);
 		}
-
+		if (eof == 1)
+			break;
 		if (is_space_string(base.command))
 		{
 
@@ -43,12 +48,11 @@ int main(int agrc, char *argv[], char *envp[]) {
 			if (error_code == SUCCES)
 				error_code = parser(base.lexer, &base);
 			if (error_code == SUCCES)
-				pre_action(&base);
+				error_code = pre_action(&base);
+//			printf("exit code = %d\n", error_code);
 			ft_lstclear(&base.lexer, free_token);
 			ft_lstclear(&base.groups, free_group_list);
 			free(base.command);
-			printf("_%d_\n", errno);
-			perror("main");
 			errno = 0;
 			if (error_code == MALLOC_ERROR)
 			{

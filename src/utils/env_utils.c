@@ -30,14 +30,6 @@ char *find_in_l_env(t_list *env, char *key, int l)
 	return (NULL);
 }
 
-//char *add_env(char *res, char *s, )
-
-//123OLGA.456$Z.789$
-
-//123
-//USER.456
-//Z.789
-
 int len_key(char *s)
 {
 	int i;

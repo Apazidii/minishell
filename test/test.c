@@ -5,11 +5,14 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <sys/wait.h>
 
 
 int main()
 {
-	int k =	execve("qwe", NULL, 0);
-	printf("%d\n",errno);
-	perror("my");
+
+	char c;
+
+	scanf("%c", &c);
+	printf("char = %d", c);
 }
