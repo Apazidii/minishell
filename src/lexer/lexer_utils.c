@@ -19,8 +19,7 @@ int is_space(char c)
 
 int is_metachar(char c)
 {
-	if (c == '|' || c == '>' || c == '<' || \
-		c == '(' || c == ')')
+	if (c == '|' || c == '>' || c == '<')
 		return (1);
 	return (0);
 }

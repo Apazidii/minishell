@@ -20,6 +20,7 @@ int main(int agrc, char *argv[], char *envp[]) {
 
 	while (1)
 	{
+		error_code = SUCCES;
 		base.command = read_cmd(&base, &eof);
 		while (base.command == NULL)
 		{
@@ -32,19 +33,16 @@ int main(int agrc, char *argv[], char *envp[]) {
 			break;
 		if (is_space_string(base.command))
 		{
-
-			//УДАЛИТЬ
-			if (base.command[0] == '0')
+			error_code = SUCCES;
+			base.command = add_newline(base.command);
+			if (base.command == NULL)
 			{
-				free(base.command);
-				break;
+				perror("readline");
+				error_code = MALLOC_ERROR;
 			}
 
-
-			//УДАЛИТЬ
-
-
-			error_code = lexer(base.command, &base);
+			if (error_code == SUCCES)
+				error_code = lexer(base.command, &base);
 			if (error_code == SUCCES)
 				error_code = parser(base.lexer, &base);
 			if (error_code == SUCCES)
@@ -52,15 +50,15 @@ int main(int agrc, char *argv[], char *envp[]) {
 //			printf("exit code = %d\n", error_code);
 			ft_lstclear(&base.lexer, free_token);
 			ft_lstclear(&base.groups, free_group_list);
-			free(base.command);
-			errno = 0;
 			if (error_code == MALLOC_ERROR)
 			{
 				printf("Malloc error\n");
 				errno = 0;
 				break;
 			}
+			errno = 0;
 		}
+		free(base.command);
 	}
 	rl_clear_history();
 

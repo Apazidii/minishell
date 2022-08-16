@@ -2,6 +2,8 @@
 
 int is_space_string(char *s)
 {
+	int err_code;
+
 	while (*s != '\0')
 	{
 		if (*s != ' ')
@@ -60,7 +62,6 @@ char *read_cmd(t_base *base, int *eof)
 	}
 	if (is_space_string(s))
 		add_history(s);
-	s = add_newline(s);
 	return (s);
 }
 

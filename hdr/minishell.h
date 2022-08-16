@@ -155,11 +155,10 @@ void free_dict(void *content);
 char *read_cmd(t_base *base, int *eof);
 int get_cwd(t_base *base);
 int is_space_string(char *s);
+char *add_newline(char *cmd);
 
-char *get_promt(t_base *base);
 
 int	insert_var(char **str, t_list *env);
-
 
 //env
 char	*find_in_env(t_list *env, char *key);
