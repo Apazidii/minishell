@@ -6,13 +6,26 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <sys/wait.h>
+#include <signal.h>
 
+
+void sigint1(int k)
+{
+	write(1, "sigint1\n", 8);
+}
+
+void sigint2(int k)
+{
+	write(1, "sigint2\n", 8);
+}
 
 int main()
 {
+	signal(SIGINT, sigint1);
+	signal(SIGINT, sigint2);
 
-	char c;
-
-	scanf("%c", &c);
-	printf("char = %d", c);
+	while (1)
+	{
+		pause();
+	}
 }

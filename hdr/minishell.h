@@ -131,6 +131,7 @@ int executer(t_group *group, t_base *base);
 int echo(char **arg, int num_arg);
 int pwd(t_base *base);
 int cd(char **arg, int num_arg);
+int builtint_exit(t_base *base);
 
 //pre_action
 int chech_builtin(t_group *group, t_base *base);
@@ -164,8 +165,9 @@ int	insert_var(char **str, t_list *env);
 char	*find_in_env(t_list *env, char *key);
 
 //signal
-void sig_int(int k);
-
+void	set_interactive_mode_signals(void);
+void	set_fork_signals(void);
+void	set_ignore_signals(void);
 
 //free
 int free_arr(char **s);

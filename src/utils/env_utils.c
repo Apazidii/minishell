@@ -1,5 +1,13 @@
 #include "minishell.h"
 
+// âàðèàíòû:
+
+// Name_01 				-> 		Name_01
+// $Name_01 			-> 		Olga
+// Hello$Name_01 		-> 		HelloOlga
+// Hello$Name_01$Name_02 -> 	HelloOlgaAlex
+// Hello$Name_01_klock 	-> 		Hello
+
 char *find_in_env(t_list *env, char *key)
 {
 	t_dict *c;
@@ -16,42 +24,133 @@ char *find_in_env(t_list *env, char *key)
 	return (NULL);
 }
 
-char *find_in_l_env(t_list *env, char *key, int l)
+size_t min(size_t n1, size_t n2)
 {
-	t_dict *c;
-
-	while (env)
-	{
-		c = (t_dict *)env->content;
-		if (ft_strncmp(c->key, key, l) == 0)
-			return (c->value);
-		env = env->next;
-	}
-	return (NULL);
+	if (n1 <= n2)
+		return (n1);
+	return (n2);
 }
 
-int len_key(char *s)
+char *ft_alloc_mem_linepair(char *str1, char* str2, size_t *len1, size_t *len2)
 {
-	int i;
+	char *res;
 
+	if (!str1 || !str2)
+		return (NULL);
+	*len1 = ft_strlen(str1);
+	*len2 = ft_strlen(str2);
+	res = (char *)malloc(sizeof(char) * (*len1 + *len2 + 1));
+	if (!res)
+		return (NULL);
+	return (res);
+}
+
+char *ft_strnconcat(char *dest, char *src, size_t start, size_t end)
+{
+	char *res;
+	size_t len_dest;
+	size_t len_src;
+	size_t i;
+	size_t j;
+
+	if (!dest || !src)
+		return (NULL);
+	if (start > end || start > ft_strlen(src) || end > ft_strlen(src))
+		return (NULL);
+	res = ft_alloc_mem_linepair(dest, src, &len_dest, &len_src);
+	if (!res)
+		return (NULL);
 	i = 0;
-	while (ft_isalnum(s[i]) || s[i] == '_')
+	while (dest[i] != '\0')
+	{
+		res[i] = dest[i];
 		i++;
-	return (i);
+	}
+	j = 0;
+	while (j + start < end)
+	{
+		res[i] = src[j + start];
+		i++;
+		j++;
+	}
+	res[i] = '\0';
+	return (res);
 }
 
-char *get_value(char *s, t_list *env)
+char *get_perem(char *str, size_t start, size_t end)
 {
-	int l;
+	char *res;
+	size_t i;
 
-	l = len_key(s);
-	return (find_in_l_env(env, s, l));
+	if (end < start)
+		return (NULL);
+	res = (char *)malloc(sizeof(char) * (end - start + 1));
+	if (!res)
+		return (NULL);
+	i = 0;
+	while (i + start < end)
+	{
+		res[i] = str[i + start];
+		i++;
+	}
+	res[i] = '\0';
+	return (res);
 }
-
-
-
 
 int	insert_var(char **str, t_list *env)
 {
+	size_t i;
+	size_t start;
+	size_t end;
+	char *perem;
+	char *res;
+	char *key;
+
+	i = 0;
+	res = "";
+
+	if (!(*str))
+		return (0); // (?)
+	// äî ïåðâîãî ñèìâîëà '$' (èëè äî '\0')
+	while ((*str)[i] && (*str)[i] != '$')
+	{
+		i++;
+	}
+	// ïîëîæèëè â ðåçóëüòàò âñå, ÷òî íàõîäèòñÿ äî ïåðâîãî '$' (èëè äî '\0')
+	res = ft_strnconcat(res, *str, 0, i);
+	while ((*str)[i])
+	{
+		if ((*str)[i] == '$' && (*str)[i + 1])
+		{
+			i++;
+			start = i;
+			while (ft_isalnum((*str)[i]) || (*str)[i] == '_')
+			{
+				i++;
+			}
+			perem = get_perem(*str, start, i);
+			key = find_in_env(env, perem);
+			if (key != NULL)
+			{
+				res = ft_strnconcat(res, key, 0, ft_strlen(key));
+			}
+		}
+		else if ((*str)[i] == '$' && !(*str)[i + 1])
+		{
+			res = ft_strnconcat(res, (*str), i, i + 1);
+			i++;
+		}
+
+		if ((*str)[i] && (*str)[i] != '$')
+		{
+			start = i;
+			while (!((*str)[i] == '\0' || (*str)[i] == '$'))
+			{
+				i++;
+			}
+			res = ft_strnconcat(res, *str, start, i);
+		}
+	}
+	*str = res;
 	return (SUCCES);
 }

@@ -1,36 +1,43 @@
 #include "minishell.h"
 
-
-
-static char *get_promt(void)
+void	sigint_fork_handler(int signum)
 {
-	char *res;
-	char *str;
-	char cwd[PATH_MAX];
-
-	if (getcwd(cwd, PATH_MAX) == NULL)
-	{
-		perror("SIGINT");
-		errno = 0;
-		return (NULL);
-	}
-	str = ft_strjoin("\033[0;35mminishell\033[0m:\033[0;36m", cwd);
-	res = ft_strjoin(str, "\033[0m$ ");
-	free(str);
-	if (res == NULL)
-	{
-		free(res);
-		return (NULL);
-	}
-	return (res);
+	(void)signum;
+	ft_putstr_fd("\n", 1);
 }
 
-void sig_int(int k)
+void	sigquit_fork_handler(int signum)
 {
-	char *promt;
+	(void)signum;
 
-	printf("\n");
-	promt = get_promt();
-	if (promt)
-		printf("%s", promt);
+	ft_putstr_fd("Quit: 3\n", 2);
+}
+
+void	newline_sig_handler(int signum)
+{
+	(void)signum;
+
+	rl_replace_line("", 1);
+	ft_putstr_fd("\n", 1);
+	rl_on_new_line();
+	rl_redisplay();
+}
+
+void	set_interactive_mode_signals(void)
+{
+
+	signal(SIGINT, newline_sig_handler);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	set_fork_signals(void)
+{
+	signal(SIGINT, sigint_fork_handler);
+	signal(SIGQUIT, sigquit_fork_handler);
+}
+
+void	set_ignore_signals(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }

@@ -18,8 +18,9 @@ int arg_in_arr_str(t_group *group, t_list *env)
 	while (i < group->number_arg)
 	{
 		group->arg_str[i] = group->arg[i].arg;
-		if (insert_var(&(group->arg_str[i]), env) != SUCCES)
-			return (MALLOC_ERROR);
+		if (group->arg[i].rep_var == 1)
+			if (insert_var(&(group->arg_str[i]), env) != SUCCES)
+				return (MALLOC_ERROR);
 		i++;
 	}
 	group->arg_str[i] == NULL;
@@ -33,10 +34,11 @@ int pre_action(t_base *base)
 	t_group	*group;
 	t_list	*all_groups;
 	int 	i;
+	int 	l;
 
 	all_groups = base->groups;
-
-	base->pid = ft_calloc(sizeof (pid_t), ft_lstsize(base->groups));
+	l = ft_lstsize(all_groups);
+	base->pid = ft_calloc(sizeof (pid_t), l);
 	if (base->pid == NULL)
 		return (MALLOC_ERROR);
 	i = 0;
@@ -58,20 +60,22 @@ int pre_action(t_base *base)
 			return (error_code);
 
 
-
-		if (ft_lstsize(all_groups) == 1 && is_builtin(all_groups->content))
+		if (l == 1 && is_builtin(all_groups->content))
 		{
 			error_code = run_command(all_groups->content, base);
 			free(base->pid);
 			return (error_code);
 		}
 
-
+		set_fork_signals();
 		group = (t_group *)all_groups->content;
 		error_code = apply_fork(group, base, i);
 		return_fd_group(group);
+
 		if (error_code != SUCCES && kill_pid(base) && free_one(base->pid))
 			return (error_code);
+
+
 
 		all_groups = all_groups->next;
 		i++;

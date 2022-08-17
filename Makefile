@@ -24,6 +24,7 @@ SRC =	src/main.c							\
 		src/builtin/echo.c					\
 		src/builtin/pwd.c					\
 		src/builtin/cd.c					\
+        src/builtin/exit.c					\
 											\
 		src/executer/executer.c				\
         src/executer/executer_utils.c		\

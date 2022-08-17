@@ -15,11 +15,12 @@ int main(int agrc, char *argv[], char *envp[]) {
 //	ft_lstiter(env_lst, print_content);
 
 
-	signal(SIGINT, sig_int);
 
 
 	while (1)
 	{
+//		set_ignore_signals();
+		set_interactive_mode_signals();
 		error_code = SUCCES;
 		base.command = read_cmd(&base, &eof);
 		while (base.command == NULL)
@@ -47,7 +48,7 @@ int main(int agrc, char *argv[], char *envp[]) {
 				error_code = parser(base.lexer, &base);
 			if (error_code == SUCCES)
 				error_code = pre_action(&base);
-//			printf("exit code = %d\n", error_code);
+			base.exit_status = error_code;
 			ft_lstclear(&base.lexer, free_token);
 			ft_lstclear(&base.groups, free_group_list);
 			if (error_code == MALLOC_ERROR)
