@@ -25,12 +25,15 @@ SRC =	src/main.c							\
 		src/builtin/pwd.c					\
 		src/builtin/cd.c					\
         src/builtin/exit.c					\
+        src/builtin/export.c				\
+        src/builtin/export_utils.c			\
 											\
 		src/executer/executer.c				\
         src/executer/executer_utils.c		\
 											\
 		src/utils/main_utils.c				\
 		src/utils/env_utils.c				\
+		src/utils/env_utils2.c				\
 											\
 		src/signal/signal.c
 

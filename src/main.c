@@ -10,6 +10,7 @@ int main(int agrc, char *argv[], char *envp[]) {
 	ft_bzero(&base, sizeof(base));
 	base.env_arr = envp;
 	base.env_lst = parse_envp(envp);
+
 //	if (errno != 0)
 //		//обработка ошибок
 //	ft_lstiter(env_lst, print_content);

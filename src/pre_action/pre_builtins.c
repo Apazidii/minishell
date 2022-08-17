@@ -11,6 +11,8 @@ int chech_builtin(t_group *group, t_base *base)
 		return (cd(group->arg_str, group->number_arg));
 	if (ft_strncmp(group->program, "exit", 5) == 0)
 		return (builtint_exit(base));
+	if (ft_strncmp(group->program, "export", 7) == 0)
+		return (export(group->arg_str, group->number_arg, base));
 	return (NOT_FOUND);
 
 

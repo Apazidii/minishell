@@ -13,6 +13,17 @@ t_dict *parse_line_envp(char *line)
 		i++;
 	res->key = ft_substr(line, 0, i);
 	res->value = ft_substr(line, i + 1, ft_strlen(line));
+	if (res->key == NULL || res->value == NULL)
+	{
+		if (res->key != NULL)
+			free(res->key);
+		if (res->value != NULL)
+			free(res->value);
+		free(res);
+		perror("export");
+		errno = 0;
+		return (NULL);
+	}
 	return (res);
 }
 

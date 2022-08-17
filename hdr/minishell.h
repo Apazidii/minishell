@@ -132,6 +132,7 @@ int echo(char **arg, int num_arg);
 int pwd(t_base *base);
 int cd(char **arg, int num_arg);
 int builtint_exit(t_base *base);
+int export(char **arg, int num_arg, t_base *base);
 
 //pre_action
 int chech_builtin(t_group *group, t_base *base);
@@ -163,6 +164,8 @@ int	insert_var(char **str, t_list *env);
 
 //env
 char	*find_in_env(t_list *env, char *key);
+t_dict	*find_dict_in_env(t_list *env, char *key);
+t_dict	*parse_line_envp(char *line);
 
 //signal
 void	set_interactive_mode_signals(void);
