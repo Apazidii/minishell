@@ -6,7 +6,12 @@ void print_env(void *content)
 	t_dict *c;
 
 	c = (t_dict *)content;
-	printf("declare -x %s=\"%s\"\n", c->key, c->value);
+	printf("declare -x %s", c->key);
+	if (c->value == NULL)
+		printf("\n");
+	else
+		printf("=\"%s\"\n", c->value);
+
 }
 
 /* function to swap data of two nodes a and b*/

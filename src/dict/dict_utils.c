@@ -56,8 +56,13 @@ void print_content(void *content)
 void free_dict(void *content)
 {
 	t_dict *c = (t_dict *)content;
-	free(c->key);
-	free(c->value);
+	if (c != NULL)
+	{
+		if (c->key != NULL)
+			free(c->key);
+		if (c->value != NULL)
+			free(c->value);
+	}
 	free(c);
 }
 

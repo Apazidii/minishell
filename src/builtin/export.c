@@ -13,24 +13,24 @@ int find_rav(char *s)
 	return (0);
 }
 
-t_dict *create_new_dict(char *s, char *key)
+t_dict *create_new_dict(char *key, char *value)
 {
 	t_dict *c;
 
-	c = ft_calloc(sizeof(t_dict *), 1);
+	c = ft_calloc(sizeof(t_dict), 1);
 	if (c == NULL)
 	{
 		perror("export");
 		errno = 0;
 		return (NULL);
 	}
-	c->key = ft_strdup(s);
-	c->value = ft_strdup(key);
-	if (c->key == NULL || c->value == NULL)
+	c->key = ft_strdup(key);
+	c->value = ft_strdup(value);
+	if ((c->key == NULL  && key != NULL) || (c->value == NULL && value != NULL))
 	{
-		if (c->key != NULL)
+		if (c->key != NULL && key != NULL)
 			free(c->key);
-		if (c->value != NULL)
+		if (c->value != NULL && value != NULL)
 			free(c->value);
 		free(c);
 		perror("export");
@@ -43,11 +43,12 @@ t_dict *create_new_dict(char *s, char *key)
 int without_key(char *s, t_list *env)
 {
 	t_dict *c;
+	t_dict *d;
 
-	c = find_dict_in_env(env, s);
-	if (c != NULL)
+	d = find_dict_in_env(env, s);
+	if (d != NULL)
 		return (SUCCES);
-	c = create_new_dict(s, "");
+	c = create_new_dict(s, NULL);
 	if (c == NULL)
 		return (MALLOC_ERROR);
 	ft_lstadd_back(&env, ft_lstnew(c));
@@ -100,13 +101,29 @@ int add_env(char *s, t_base *base)
 	return (with_key(s, base->env_lst));
 }
 
+void *nothing(void *c)
+{
+	return (c);
+}
+
 int export(char **arg, int num_arg, t_base *base)
 {
 	int i;
+	t_list *temp;
 
-	sort_list(base->env_lst);
 	if (num_arg == 1)
-		ft_lstiter(base->env_lst, print_env);
+	{
+		temp = ft_lstmap(base->env_lst, nothing, free_dict);
+		if (temp == NULL)
+		{
+			perror("export");
+			errno = 0;
+			return (MALLOC_ERROR);
+		}
+		sort_list(temp);
+		ft_lstiter(temp, print_env);
+		ft_lstclear(&temp, free_dict);
+	}
 	i = 1;
 	while (i < num_arg)
 	{

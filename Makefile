@@ -27,6 +27,8 @@ SRC =	src/main.c							\
         src/builtin/exit.c					\
         src/builtin/export.c				\
         src/builtin/export_utils.c			\
+        src/builtin/unset.c					\
+        src/builtin/env.c					\
 											\
 		src/executer/executer.c				\
         src/executer/executer_utils.c		\

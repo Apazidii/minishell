@@ -133,6 +133,8 @@ int pwd(t_base *base);
 int cd(char **arg, int num_arg);
 int builtint_exit(t_base *base);
 int export(char **arg, int num_arg, t_base *base);
+int unset(char **arg, int num_arg, t_base *base);
+int env(t_base *base);
 
 //pre_action
 int chech_builtin(t_group *group, t_base *base);
