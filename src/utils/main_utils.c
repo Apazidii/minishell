@@ -2,8 +2,6 @@
 
 int is_space_string(char *s)
 {
-	int err_code;
-
 	while (*s != '\0')
 	{
 		if (*s != ' ')

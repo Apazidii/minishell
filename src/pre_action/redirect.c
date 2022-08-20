@@ -27,6 +27,7 @@ int straight_redirect(t_group *group, t_list *env, t_redirect *redirect, int num
 			errno = 0;
 			return (FILE_ERROR);
 		}
+		group->type_redirect = redirect[i].type_redirect;
 		if (i != number_redirect - 1)
 			close(fd);
 		i++;
@@ -56,7 +57,7 @@ int reverse_redirect(t_group *group, t_list *env, t_redirect *redirect, int numb
 			fd = open(redirect[i].redirect_file, O_RDONLY,  0644);
 		else if (redirect[i].type_redirect == e_double_reverse_redirect)
 		{
-			error_code = heredoc(&fd, redirect[i].redirect_file, env);
+			error_code = heredoc(&fd, redirect[i].redirect_file, env, group);
 			if (error_code != SUCCES)
 				return (error_code);
 		}
@@ -66,8 +67,13 @@ int reverse_redirect(t_group *group, t_list *env, t_redirect *redirect, int numb
 			errno = 0;
 			return (FILE_ERROR);
 		}
+		group->type_reverse_redirect = redirect[i].type_redirect;
 		if (i != number_redirect - 1)
+		{
 			close(fd);
+			unlink(group->heredoc_filename);
+			free(group->heredoc_filename);
+		}
 		i++;
 	}
 	return (replace_fd(&group->buf_rr_fd, fd, 0));

@@ -65,10 +65,15 @@ int replace_fd_group(t_group *group)
 	return (error_code);
 }
 
-int return_fd_group(t_group *group)
+void return_fd_group(t_group *group)
 {
 	return_fd(group->buf_sr_fd, 1);
 	return_fd(group->buf_rr_fd, 0);
 	return_fd(group->pipe_input_buf, 0);
 	return_fd(group->pipe_output_buf, 1);
+	if (group->type_reverse_redirect == e_double_reverse_redirect)
+	{
+		unlink(group->heredoc_filename);
+		free(group->heredoc_filename);
+	}
 }

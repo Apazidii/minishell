@@ -6,7 +6,6 @@ int get_path(t_list *env, char ***res)
 {
 	char	*s;
 	char 	*path;
-	int		i;
 
 	s = find_in_env(env, "PATH");
 	if (s == NULL)

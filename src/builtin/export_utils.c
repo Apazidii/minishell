@@ -24,7 +24,7 @@ void swap(t_list *a, t_list *b)
 
 void sort_list(t_list *start)
 {
-	int swapped, i;
+	int swapped;
 	t_list *ptr1;
 	t_list *lptr = NULL;
 

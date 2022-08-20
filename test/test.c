@@ -7,25 +7,25 @@
 #include <errno.h>
 #include <sys/wait.h>
 #include <signal.h>
-
-
-void sigint1(int k)
-{
-	write(1, "sigint1\n", 8);
-}
-
-void sigint2(int k)
-{
-	write(1, "sigint2\n", 8);
-}
-
+#define _GNU_SOURCE 1
+#include <string.h>
 int main()
 {
-	signal(SIGINT, sigint1);
-	signal(SIGINT, sigint2);
+	int fd;
+	char str[100];
+	char putstr[] = "string";
 
-	while (1)
-	{
-		pause();
-	}
+	fd = open("ss",  O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	perror("open");
+
+
+	write(fd, putstr, strlen(putstr));
+	perror("write");
+
+	int ret = read(fd, str, 100);
+	perror("read");
+
+	str[ret] = '\0';
+	printf("%d _%s_\n",ret,  str);
+
 }

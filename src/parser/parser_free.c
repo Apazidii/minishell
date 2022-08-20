@@ -16,6 +16,21 @@ int free_group_arg(t_arg *arg, int num_arg)
 	return (1);
 }
 
+int free_group_arg_str(char **arg, int num_arg)
+{
+	int i;
+
+	if (arg != NULL)
+	{
+		i = -1;
+		while (++i < num_arg)
+			if (arg[i] != NULL)
+				free(arg[i]);
+		free(arg);
+	}
+	return (1);
+}
+
 int free_group_redirect(t_redirect *arg, int num_arg)
 {
 	int i;
@@ -46,7 +61,7 @@ int free_group(t_group *group)
 	if (group->number_arg > 0)
 		free_group_arg(group->arg, group->number_arg);
 	if (group->arg_str != NULL)
-		free(group->arg_str);
+		free_group_arg_str(group->arg_str, group->number_arg);
 	free(group);
 	return (1);
 }

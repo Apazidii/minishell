@@ -43,6 +43,7 @@ int pre_action(t_base *base)
 	i = 0;
 	while (all_groups)
 	{
+		group = (t_group *)all_groups->content;
 
 		error_code = arg_in_arr_str(all_groups->content, base->env_lst);
 		if (error_code != SUCCES)
@@ -67,12 +68,12 @@ int pre_action(t_base *base)
 		if (l == 1 && is_builtin(all_groups->content))
 		{
 			error_code = run_command(all_groups->content, base);
+			return_fd_group(group);
 			free(base->pid);
 			return (error_code);
 		}
 
 		set_fork_signals();
-		group = (t_group *)all_groups->content;
 		error_code = apply_fork(group, base, i);
 		return_fd_group(group);
 

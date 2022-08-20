@@ -107,9 +107,12 @@ typedef struct s_group
 
 	t_redirect	*redirect;
 	int 		number_redirect;
+	enum e_type type_redirect;
 
 	t_redirect	*reverse_redirect;
+	char		*heredoc_filename;
 	int 		number_reverse_redirect;
+	enum e_type type_reverse_redirect;
 
 
 	int 		fd_redirect;

@@ -15,4 +15,5 @@ void print_env_without_declare(void *content)
 int env(t_base *base)
 {
 	ft_lstiter(base->env_lst, print_env_without_declare);
+	return (SUCCES);
 }

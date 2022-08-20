@@ -1,12 +1,36 @@
 #include "minishell.h"
 #include "pre_action.h"
 
-int heredoc(int *f, char *stop, t_list *env)
+
+char *create_filename(char *s, int i)
+{
+	char *num;
+	char *res;
+//	char *result;
+
+	num = ft_itoa(i);
+	if (num == NULL)
+		return (NULL);
+	res = ft_strjoin(s, num);
+	free(num);
+//	if (res == NULL)
+//		return (NULL);
+//	result = ft_strjoin("./tmp/", res);
+//	free(res);
+	return (res);
+}
+
+int heredoc(int *f, char *stop, t_list *env, t_group *group)
 {
 	int fd;
 	char *s;
+	static int i;
 
-	fd = open("/tmp", __O_TMPFILE | O_RDWR);
+	group->heredoc_filename  = create_filename(group->arg_str[0], i++);
+
+	if (group->heredoc_filename == NULL)
+		return (MALLOC_ERROR);
+	fd = open(group->heredoc_filename, O_CREAT | O_WRONLY | O_TRUNC,  0644);
 	if (fd == -1)
 	{
 		perror("heredoc");
@@ -29,6 +53,9 @@ int heredoc(int *f, char *stop, t_list *env)
 		free(s);
 	}
 	free(s);
+	close(fd);
+	fd = open(group->heredoc_filename,  O_RDONLY,  0644);
+
 	*f = fd;
 	return (SUCCES);
 }

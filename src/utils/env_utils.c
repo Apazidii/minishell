@@ -139,8 +139,8 @@ int	insert_var(char **str, t_list *env)
 			res = ft_strnconcat(res, *str, start, i);
 		}
 	}
-
-//	free(*str);
+	char *temp = *str;
+	free(temp);
 	*str = res;
 	return (SUCCES);
 }

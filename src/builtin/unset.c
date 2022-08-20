@@ -34,4 +34,5 @@ int unset(char **arg, int num_arg, t_base *base)
 		delete_dict_elem(&(base->env_lst), arg[i]);
 		i++;
 	}
+	return (SUCCES);
 }
