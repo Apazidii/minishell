@@ -22,7 +22,7 @@ int arg_in_arr_str(t_group *group, t_list *env)
 				return (MALLOC_ERROR);
 		i++;
 	}
-	group->arg_str[i] == NULL;
+	group->arg_str[i] = NULL;
 	return (SUCCES);
 }
 
@@ -44,7 +44,7 @@ int pre_action(t_base *base)
 	while (all_groups)
 	{
 
-		error_code = arg_in_arr_str(group, base->env_lst);
+		error_code = arg_in_arr_str(all_groups->content, base->env_lst);
 		if (error_code != SUCCES)
 			return (error_code);
 

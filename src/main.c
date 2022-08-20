@@ -46,11 +46,14 @@ static int	run_command(t_base *base)
 	return (SUCCES);
 }
 
-int	main(int agrc, char *argv[], char *envp[])
+int	main(int argc, char *argv[], char *envp[])
 {
 	t_base	base;
 	int		error_code;
 
+
+	(void)argc;
+	(void)argv;
 	ft_bzero(&base, sizeof(base));
 	base.env_arr = envp;
 	base.env_lst = parse_envp(envp);

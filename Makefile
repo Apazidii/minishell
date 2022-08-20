@@ -55,7 +55,8 @@ DEP = $(SRC:.c=.d)
 NAME 		= minishell
 LIBFT		= src/libft/libft.a
 LIBFTDIR	= src/libft
-CFLAGS 		=  -g
+CFLAGS 		=  -g	-Wall -Wextra -Werror
+#CFLAGS		+= -fsanitize=address
 CPPFLAGS 	= -MMD -I./hdr
 
 all:		$(LIBFT) $(NAME) Makefile

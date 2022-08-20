@@ -48,7 +48,7 @@ char *ft_strnconcat(char *dest, char *src, size_t start, size_t end)
 
 	if (!dest || !src)
 		return (NULL);
-	if (start > end || start > ft_strlen(src) || end > ft_strlen(src))
+	if (start > end || start > (size_t)ft_strlen(src) || end > (size_t)ft_strlen(src))
 		return (NULL);
 	res = ft_alloc_mem_linepair(dest, src, &len_dest, &len_src);
 	if (!res)
@@ -95,7 +95,6 @@ int	insert_var(char **str, t_list *env)
 {
 	size_t i;
 	size_t start;
-	size_t end;
 	char *perem;
 	char *res;
 	char *key;
