@@ -24,13 +24,6 @@ char *find_in_env(t_list *env, char *key)
 	return (NULL);
 }
 
-size_t min(size_t n1, size_t n2)
-{
-	if (n1 <= n2)
-		return (n1);
-	return (n2);
-}
-
 char *ft_alloc_mem_linepair(char *str1, char* str2, size_t *len1, size_t *len2)
 {
 	char *res;
@@ -39,7 +32,7 @@ char *ft_alloc_mem_linepair(char *str1, char* str2, size_t *len1, size_t *len2)
 		return (NULL);
 	*len1 = ft_strlen(str1);
 	*len2 = ft_strlen(str2);
-	res = (char *)malloc(sizeof(char) * (*len1 + *len2 + 1));
+	res = (char *)ft_calloc(sizeof(char) , (*len1 + *len2 + 1));
 	if (!res)
 		return (NULL);
 	return (res);
@@ -74,6 +67,7 @@ char *ft_strnconcat(char *dest, char *src, size_t start, size_t end)
 		j++;
 	}
 	res[i] = '\0';
+	free(dest);
 	return (res);
 }
 
@@ -84,7 +78,7 @@ char *get_perem(char *str, size_t start, size_t end)
 
 	if (end < start)
 		return (NULL);
-	res = (char *)malloc(sizeof(char) * (end - start + 1));
+	res = (char *)ft_calloc(sizeof(char) ,(end - start + 1));
 	if (!res)
 		return (NULL);
 	i = 0;
@@ -106,18 +100,16 @@ int	insert_var(char **str, t_list *env)
 	char *res;
 	char *key;
 
+
+
 	i = 0;
-	res = "";
+
+
+	res = (char *)ft_calloc(1, 1);
 
 	if (!(*str))
 		return (0); // (?)
-	// äî ïåðâîãî ñèìâîëà '$' (èëè äî '\0')
-	while ((*str)[i] && (*str)[i] != '$')
-	{
-		i++;
-	}
-	// ïîëîæèëè â ðåçóëüòàò âñå, ÷òî íàõîäèòñÿ äî ïåðâîãî '$' (èëè äî '\0')
-	res = ft_strnconcat(res, *str, 0, i);
+
 	while ((*str)[i])
 	{
 		if ((*str)[i] == '$' && (*str)[i + 1])
@@ -125,15 +117,12 @@ int	insert_var(char **str, t_list *env)
 			i++;
 			start = i;
 			while (ft_isalnum((*str)[i]) || (*str)[i] == '_')
-			{
 				i++;
-			}
 			perem = get_perem(*str, start, i);
 			key = find_in_env(env, perem);
+			free(perem);
 			if (key != NULL)
-			{
 				res = ft_strnconcat(res, key, 0, ft_strlen(key));
-			}
 		}
 		else if ((*str)[i] == '$' && !(*str)[i + 1])
 		{
@@ -151,6 +140,8 @@ int	insert_var(char **str, t_list *env)
 			res = ft_strnconcat(res, *str, start, i);
 		}
 	}
+
+//	free(*str);
 	*str = res;
 	return (SUCCES);
 }

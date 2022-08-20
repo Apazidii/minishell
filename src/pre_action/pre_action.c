@@ -7,8 +7,7 @@ int arg_in_arr_str(t_group *group, t_list *env)
 
 
 	//добавить переменные среды внутрь агрументов
-	group->arg_str = ft_calloc(sizeof(char *), group->number_arg + 1);
-//	group->arg_str = NULL;
+	group->arg_str = (char **)ft_calloc(sizeof(char *), group->number_arg + 1);
 	if (group->arg_str == NULL)
 	{
 //		printf("Malloc Error");
@@ -44,6 +43,11 @@ int pre_action(t_base *base)
 	i = 0;
 	while (all_groups)
 	{
+
+		error_code = arg_in_arr_str(group, base->env_lst);
+		if (error_code != SUCCES)
+			return (error_code);
+
 
 		if (init_pipe(all_groups, all_groups->next, base) != SUCCES)
 			return (PIPE_ERROR);

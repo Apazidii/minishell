@@ -3,6 +3,8 @@ SRC =	src/main.c							\
 											\
 		src/lexer/lexer.c					\
 		src/lexer/lexer_utils.c				\
+		src/lexer/type_lexer.c				\
+		src/lexer/add_to_lst_lexer.c		\
 											\
 		src/parser/parser.c					\
 		src/parser/parser_utils.c			\

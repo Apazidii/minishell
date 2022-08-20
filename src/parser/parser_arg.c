@@ -31,8 +31,8 @@ int parse_arg(t_list **lexer, t_group *group)
 	group->arg = add_arg(group->arg, (group->number_arg)++, content);
 	if (group->arg == NULL && free_group(group))
 		return (MALLOC_ERROR);
-	if (group->number_arg != 0)
-		group->program = group->arg[0].arg;
+//	if (group->number_arg != 0)
+//		group->arg_str[0] = group->arg[0].arg;
 	(*lexer) = (*lexer)->next;
 	return (SUCCES);
 }

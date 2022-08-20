@@ -32,6 +32,7 @@
 #define BUILTIN_ERROR	2
 #define VALID_ERROR		2
 #define SUCCES			0
+#define STOP			-1
 
 
 enum e_type
@@ -95,7 +96,7 @@ typedef struct s_redirect
 
 typedef struct s_group
 {
-	char		*program;
+//	char		*program;
 
 	t_arg		*arg;
 	char 		**arg_str;

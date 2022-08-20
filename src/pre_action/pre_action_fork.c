@@ -10,11 +10,11 @@ int run_command(t_group *group, t_base *base)
 
 //	error_code = redirect(group, base->env_lst);
 //	if (error_code == SUCCES)
-	error_code = arg_in_arr_str(group, base->env_lst);
-	if (error_code == SUCCES)
-		error_code = chech_builtin(group, base);
+//	error_code = arg_in_arr_str(group, base->env_lst);
+//		if (error_code == SUCCES)
+	error_code = chech_builtin(group, base);
 	if (error_code == NOT_FOUND)
-		error_code = run_exec(base, group->program, group->arg_str);
+		error_code = run_exec(base, group->arg_str[0], group->arg_str);
 
 	return (error_code);
 }

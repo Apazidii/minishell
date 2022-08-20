@@ -9,5 +9,4 @@ int builtint_exit(t_base *base)
 	rl_clear_history();
 	ft_lstclear(&base->env_lst, free_dict);
 	exit(0);
-	return (SUCCES);
 }

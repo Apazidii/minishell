@@ -21,13 +21,13 @@ int kill_pid(t_base *base)
 
 int is_builtin(t_group *group)
 {
-	if ((ft_strncmp(group->program, "cd", 3) == 0		|| \
-		ft_strncmp(group->program, "echo", 5) == 0		|| \
-		ft_strncmp(group->program, "pwd", 4) == 0		|| \
-		ft_strncmp(group->program, "export", 7) == 0	|| \
-		ft_strncmp(group->program, "unset", 6) == 0		|| \
-		ft_strncmp(group->program, "env", 4) == 0		|| \
-		ft_strncmp(group->program, "exit", 5) == 0))
+	if ((ft_strncmp(group->arg_str[0], "cd", 3) == 0		|| \
+		ft_strncmp(group->arg_str[0], "echo", 5) == 0		|| \
+		ft_strncmp(group->arg_str[0], "pwd", 4) == 0		|| \
+		ft_strncmp(group->arg_str[0], "export", 7) == 0	|| \
+		ft_strncmp(group->arg_str[0], "unset", 6) == 0		|| \
+		ft_strncmp(group->arg_str[0], "env", 4) == 0		|| \
+		ft_strncmp(group->arg_str[0], "exit", 5) == 0))
 		return (1);
 	return (0);
 }
