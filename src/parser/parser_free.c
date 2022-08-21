@@ -58,6 +58,8 @@ int free_group(t_group *group)
 		return (1);
 	if (group->number_redirect > 0)
 		free_group_redirect(group->redirect, group->number_redirect);
+	if (group->number_reverse_redirect > 0)
+		free_group_redirect(group->reverse_redirect, group->number_reverse_redirect);
 	if (group->number_arg > 0)
 		free_group_arg(group->arg, group->number_arg);
 	if (group->arg_str != NULL)

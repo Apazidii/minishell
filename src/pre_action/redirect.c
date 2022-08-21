@@ -5,6 +5,7 @@ int straight_redirect(t_group *group, t_list *env, t_redirect *redirect, int num
 {
 	int i;
 	int fd;
+	char *temp;
 
 	i = 0;
 	if (number_redirect == 0)
@@ -15,8 +16,12 @@ int straight_redirect(t_group *group, t_list *env, t_redirect *redirect, int num
 	while(i < number_redirect)
 	{
 		if (redirect[i].rep_var == 1)
+		{
+			temp = redirect[i].redirect_file;
 			if (insert_var(&(redirect[i].redirect_file), env) != SUCCES)
 				return (MALLOC_ERROR);
+			free(temp);
+		}
 		if (redirect[i].type_redirect == e_redirect)
 			fd = open(redirect[i].redirect_file, O_CREAT | O_WRONLY | O_TRUNC,  0644);
 		else if (redirect[i].type_redirect == e_double_redirect)
@@ -40,6 +45,7 @@ int reverse_redirect(t_group *group, t_list *env, t_redirect *redirect, int numb
 	int i;
 	int fd;
 	int error_code;
+	char *temp;
 
 	i = 0;
 	if (number_redirect == 0)
@@ -51,8 +57,12 @@ int reverse_redirect(t_group *group, t_list *env, t_redirect *redirect, int numb
 	{
 		if (redirect[i].type_redirect != e_double_reverse_redirect)
 			if (redirect[i].rep_var == 1)
+			{
+				temp = redirect[i].redirect_file;
 				if (insert_var(&(redirect[i].redirect_file), env) != SUCCES)
 					return (MALLOC_ERROR);
+				free(temp);
+			}
 		if (redirect[i].type_redirect == e_reverse_redirect)
 			fd = open(redirect[i].redirect_file, O_RDONLY,  0644);
 		else if (redirect[i].type_redirect == e_double_reverse_redirect)

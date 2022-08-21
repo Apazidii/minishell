@@ -18,7 +18,7 @@ t_redirect	*add_redirect(t_redirect *redirect, int num_redirect, t_token *token,
 		return (NULL);
 	res[i].rep_var = token->rep_var;
 	res[i].type_redirect = type;
-	free(redirect);
+	free_group_redirect(redirect, num_redirect - 1);
 	return (res);
 }
 
