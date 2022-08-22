@@ -101,9 +101,28 @@ int add_env(char *s, t_base *base)
 	return (with_key(s, base->env_lst));
 }
 
-void *nothing(void *c)
+void *copy_dict(void *content)
 {
-	return (c);
+	t_dict *d;
+	t_dict *c;
+
+	d = (t_dict *) ft_calloc(sizeof(t_dict), 1);
+	if (d == NULL)
+		return (NULL);
+	c = (t_dict *)content;
+	d->key = ft_strdup(c->key);
+	if (d->key == NULL && c->key != NULL)
+	{
+		free_dict(d);
+		return (NULL);
+	}
+	d->value = ft_strdup(c->value);
+	if (d->value == NULL && c->value != NULL)
+	{
+		free_dict(d);
+		return (NULL);
+	}
+	return (d);
 }
 
 int export(char **arg, int num_arg, t_base *base)
@@ -113,7 +132,7 @@ int export(char **arg, int num_arg, t_base *base)
 
 	if (num_arg == 1)
 	{
-		temp = ft_lstmap(base->env_lst, nothing, free_dict);
+		temp = ft_lstmap(base->env_lst, copy_dict, free_dict);
 		if (temp == NULL)
 		{
 			perror("export");
