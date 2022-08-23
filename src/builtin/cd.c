@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int cd(char **arg, int num_arg)
+int	cd(char **arg, int num_arg)
 {
 	if (num_arg != 2)
 		printf("minishell: cd: too many arguments");

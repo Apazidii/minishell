@@ -1,9 +1,9 @@
-#include "minishell.h"
+#include "../../hdr/minishell.h"
 #include "builtin.h"
 
-void print_env(void *content)
+void	print_env(void *content)
 {
-	t_dict *c;
+	t_dict	*c;
 
 	c = (t_dict *)content;
 	printf("declare -x %s", c->key);
@@ -11,38 +11,36 @@ void print_env(void *content)
 		printf("\n");
 	else
 		printf("=\"%s\"\n", c->value);
-
 }
 
 /* function to swap data of two nodes a and b*/
-void swap(t_list *a, t_list *b)
+void	swap(t_list *a, t_list *b)
 {
-	void *temp = a->content;
+	void	*temp;
+
+	temp = a->content;
 	a->content = b->content;
 	b->content = temp;
 }
 
-void sort_list(t_list *start)
+void	sort_list(t_list *start)
 {
-	int swapped;
-	t_list *ptr1;
-	t_list *lptr = NULL;
+	int		swapped;
+	t_list	*ptr1;
+	t_list	*lptr;
 
-	/* Checking for empty list */
 	if (start == NULL)
-		return;
-
+		return ;
+	lptr = NULL;
 	while (1)
 	{
 		swapped = 0;
 		ptr1 = start;
-
 		while (ptr1->next != lptr)
 		{
-
-			if (ft_strncmp(	((t_dict *)ptr1->content)->key,	\
+			if (ft_strncmp(((t_dict *)ptr1->content)->key, \
 						((t_dict *)ptr1->next->content)->key,
-							   ft_strlen(((t_dict *)ptr1->content)->key) + 1) > 0)
+					ft_strlen(((t_dict *)ptr1->content)->key) + 1) > 0)
 			{
 				swap(ptr1, ptr1->next);
 				swapped = 1;
@@ -51,16 +49,16 @@ void sort_list(t_list *start)
 		}
 		lptr = ptr1;
 		if (!swapped)
-			break;
+			break ;
 	}
 }
 
-int valid_env(char *s)
+int	valid_env(char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if (!ft_isalnum(*s) && *s !='_')
+	if (!ft_isalnum(*s) && *s != '_')
 		return (1);
 	while (s[i] != '\0')
 	{

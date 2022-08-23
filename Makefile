@@ -29,6 +29,7 @@ SRC =	src/main.c							\
         src/builtin/exit.c					\
         src/builtin/export.c				\
         src/builtin/export_utils.c			\
+		src/builtin/export_utils2.c			\
         src/builtin/unset.c					\
         src/builtin/env.c					\
 											\
@@ -36,8 +37,10 @@ SRC =	src/main.c							\
         src/executer/executer_utils.c		\
 											\
 		src/utils/main_utils.c				\
+		src/utils/main_utils2.c				\
 		src/utils/env_utils.c				\
 		src/utils/env_utils2.c				\
+		src/utils/env_utils3.c				\
 											\
 		src/signal/signal.c
 

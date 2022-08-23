@@ -172,6 +172,14 @@ int	insert_var(char **str, t_list *env);
 char	*find_in_env(t_list *env, char *key);
 t_dict	*find_dict_in_env(t_list *env, char *key);
 t_dict	*parse_line_envp(char *line);
+void	checks_and_init(size_t *i, char **res);
+char	*iterate_per_perem(size_t *i, size_t *start, char *str);
+void	get_last_dollar(size_t *i, char *str, char **res);
+void	get_remaining_characters(size_t *start, size_t *i,
+	char *str, char **res);
+char	*ft_strnconcat(char *dest, char *src, size_t start, size_t end);
+char	*get_perem(char *str, size_t start, size_t end);
+void	copy_from_dest(char *dest, char **res, size_t *i);
 
 //signal
 void	set_interactive_mode_signals(void);

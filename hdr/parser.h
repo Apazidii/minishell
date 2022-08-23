@@ -15,6 +15,7 @@ t_arg	*add_arg(t_arg *arg, int num_arg, t_token *token);
 int free_group_redirect(t_redirect *arg, int num_arg);
 
 void print_group(void *gr);
+void	group_argue(t_group **gr);
 
 
 #endif

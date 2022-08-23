@@ -1,14 +1,14 @@
-# include "minishell.h"
+#include "minishell.h"
 
-//разбиение строки КЛЮЧ=ЗНАЧЕНИЕ на элемент словаря
-t_dict *parse_line_envp(char *line)
+t_dict	*parse_line_envp(char *line)
 {
-	t_dict *res;
+	t_dict	*res;
+	int		i;
 
 	res = (t_dict *)ft_calloc(sizeof(t_dict), 1);
 	if (res == NULL)
 		return (NULL);
-	int i = 0;
+	i = 0;
 	while (line[i] != '=')
 		i++;
 	res->key = ft_substr(line, 0, i);
@@ -27,7 +27,7 @@ t_dict *parse_line_envp(char *line)
 	return (res);
 }
 
-t_list *parse_envp(char *envp[])
+t_list	*parse_envp(char *envp[])
 {
 	int		i;
 	t_list	*env_lst;
@@ -46,16 +46,19 @@ t_list *parse_envp(char *envp[])
 	return (env_lst);
 }
 
-
-void print_content(void *content)
+void	print_content(void *content)
 {
-	t_dict *c = (t_dict *)content;
+	t_dict	*c;
+
+	c = (t_dict *)content;
 	printf("%-40s%s\n", c->key, c->value);
 }
 
-void free_dict(void *content)
+void	free_dict(void *content)
 {
-	t_dict *c = (t_dict *)content;
+	t_dict	*c;
+
+	c = (t_dict *)content;
 	if (c != NULL)
 	{
 		if (c->key != NULL)
@@ -65,7 +68,3 @@ void free_dict(void *content)
 	}
 	free(c);
 }
-
-
-
-

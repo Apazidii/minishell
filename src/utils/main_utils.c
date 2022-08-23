@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int is_space_string(char *s)
+int	is_space_string(char *s)
 {
 	while (*s != '\0')
 	{
@@ -11,9 +11,9 @@ int is_space_string(char *s)
 	return (0);
 }
 
-char *add_newline(char *cmd)
+char	*add_newline(char *cmd)
 {
-	char *res;
+	char	*res;
 
 	res = ft_strjoin(cmd, " newline");
 	free(cmd);
@@ -22,12 +22,10 @@ char *add_newline(char *cmd)
 	return (res);
 }
 
-
-
-char *get_promt(t_base *base)
+char	*get_promt(t_base *base)
 {
-	char *res;
-	char *str;
+	char	*res;
+	char	*str;
 
 	if (get_cwd(base))
 		return (NULL);
@@ -42,10 +40,10 @@ char *get_promt(t_base *base)
 	return (res);
 }
 
-char *read_cmd(t_base *base, int *eof)
+char	*read_cmd(t_base *base, int *eof)
 {
-	char *s;
-	char *promt;
+	char	*s;
+	char	*promt;
 
 	*eof = 0;
 	promt = get_promt(base);
@@ -63,7 +61,7 @@ char *read_cmd(t_base *base, int *eof)
 	return (s);
 }
 
-int get_cwd(t_base *base)
+int	get_cwd(t_base *base)
 {
 	if (getcwd(base->cwd, PATH_MAX) == NULL)
 	{
@@ -73,24 +71,3 @@ int get_cwd(t_base *base)
 	}
 	return (0);
 }
-
-int free_arr(char **s)
-{
-	int i;
-
-	i = 0;
-	while (s[i] != NULL)
-	{
-		free(s[i]);
-		i++;
-	}
-	free(s);
-	return (1);
-}
-
-int free_one(void *k)
-{
-	free(k);
-	return (1);
-}
-

@@ -1,8 +1,7 @@
 #include "minishell.h"
 #include "pre_action.h"
 
-
-void return_fd(int buf_fd, int fd)
+void	return_fd(int buf_fd, int fd)
 {
 	if (buf_fd != -2)
 	{
@@ -16,8 +15,7 @@ void return_fd(int buf_fd, int fd)
 	}
 }
 
-
-int replace_fd(int *buf_fd, int fd, int newfd)
+int	replace_fd(int *buf_fd, int fd, int newfd)
 {
 	if (fd == -2)
 		return (SUCCES);
@@ -40,7 +38,7 @@ int replace_fd(int *buf_fd, int fd, int newfd)
 	return (SUCCES);
 }
 
-void close_unused_fd(t_group *group)
+void	close_unused_fd(t_group *group)
 {
 	if (group->pipe_input[1] != -2)
 		close(group->pipe_input[1]);
@@ -55,17 +53,18 @@ void close_unused_fd(t_group *group)
 	errno = 0;
 }
 
-int replace_fd_group(t_group *group)
+int	replace_fd_group(t_group *group)
 {
-	int error_code;
+	int	error_code;
 
-	error_code = replace_fd(&(group->pipe_input_buf),  group->pipe_input[0],   0);
+	error_code = replace_fd(&(group->pipe_input_buf), group->pipe_input[0], 0);
 	if (error_code == SUCCES)
-		error_code = replace_fd(&(group->pipe_output_buf), group->pipe_output[1] , 1);
+		error_code = replace_fd(&(group->pipe_output_buf),
+				group->pipe_output[1], 1);
 	return (error_code);
 }
 
-void return_fd_group(t_group *group)
+void	return_fd_group(t_group *group)
 {
 	return_fd(group->buf_sr_fd, 1);
 	return_fd(group->buf_rr_fd, 0);

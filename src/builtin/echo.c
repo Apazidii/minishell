@@ -1,9 +1,9 @@
 #include "minishell.h"
 
-int echo(char **arg, int num_arg)
+int	echo(char **arg, int num_arg)
 {
-	int i;
-	int newline;
+	int	i;
+	int	newline;
 
 	i = 1;
 	newline = 1;

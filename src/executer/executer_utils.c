@@ -1,11 +1,10 @@
 #include "minishell.h"
 #include "executer.h"
 
-
-int get_path(t_list *env, char ***res)
+int	get_path(t_list *env, char ***res)
 {
 	char	*s;
-	char 	*path;
+	char	*path;
 
 	s = find_in_env(env, "PATH");
 	if (s == NULL)
@@ -26,10 +25,11 @@ int get_path(t_list *env, char ***res)
 	return (SUCCES);
 }
 
-int check_bin(char *path, char *bin)
+int	check_bin(char *path, char *bin)
 {
 	DIR				*dir;
 	struct dirent	*dent;
+	int				k;
 
 	dir = opendir(path);
 	if (dir == NULL)
@@ -41,11 +41,14 @@ int check_bin(char *path, char *bin)
 	while (dent)
 	{
 		if (dent->d_type == 8)
-			if (ft_strncmp(dent->d_name, bin, ft_strlen(bin) + 1) == 0)
+		{
+			k = ft_strncmp(dent->d_name, bin, ft_strlen(bin) + 1);
+			if (k == 0)
 			{
 				closedir(dir);
 				return (SUCCES);
 			}
+		}
 		dent = readdir(dir);
 	}
 	closedir(dir);
@@ -58,12 +61,12 @@ int check_bin(char *path, char *bin)
 	return (DIR_NOT_FOUND);
 }
 
-int find_bin(t_list *env, char *bin, char **res)
+int	find_bin(t_list *env, char *bin, char **res)
 {
 	int		error_code;
 	char	**path_arr;
-	char 	*path;
-	int 	i;
+	char	*path;
+	int		i;
 
 	error_code = get_path(env, &path_arr);
 	if (error_code != SUCCES)
@@ -75,7 +78,7 @@ int find_bin(t_list *env, char *bin, char **res)
 		if (error_code == DIR_ERROR && free_arr(path_arr))
 			return (error_code);
 		if (error_code == SUCCES)
-			break;
+			break ;
 		i++;
 	}
 	if (error_code == DIR_NOT_FOUND && free_arr(path_arr))

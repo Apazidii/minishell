@@ -1,64 +1,52 @@
-#include "minishell.h"
+#include "../../hdr/minishell.h"
 
-// âàðèàíòû:
-
-// Name_01 				-> 		Name_01
-// $Name_01 			-> 		Olga
-// Hello$Name_01 		-> 		HelloOlga
-// Hello$Name_01$Name_02 -> 	HelloOlgaAlex
-// Hello$Name_01_klock 	-> 		Hello
-
-char *find_in_env(t_list *env, char *key)
+char	*find_in_env(t_list *env, char *key)
 {
-	t_dict *c;
-	int 	l;
+	t_dict	*c;
+	size_t	len;
 
-	l = ft_strlen(key);
+	len = ft_strlen(key);
 	while (env)
 	{
 		c = (t_dict *)env->content;
-		if (ft_strncmp(c->key, key, l) == 0)
+		if (ft_strncmp(c->key, key, len) == 0)
 			return (c->value);
 		env = env->next;
 	}
 	return (NULL);
 }
 
-char *ft_alloc_mem_linepair(char *str1, char* str2, size_t *len1, size_t *len2)
+char	*ft_alloc_mem_linepair(char *str1, char *str2,
+	size_t *len1, size_t *len2)
 {
-	char *res;
+	char	*res;
 
 	if (!str1 || !str2)
 		return (NULL);
 	*len1 = ft_strlen(str1);
 	*len2 = ft_strlen(str2);
-	res = (char *)ft_calloc(sizeof(char) , (*len1 + *len2 + 1));
+	res = (char *)ft_calloc(sizeof(char), (*len1 + *len2 + 1));
 	if (!res)
 		return (NULL);
 	return (res);
 }
 
-char *ft_strnconcat(char *dest, char *src, size_t start, size_t end)
+char	*ft_strnconcat(char *dest, char *src, size_t start, size_t end)
 {
-	char *res;
-	size_t len_dest;
-	size_t len_src;
-	size_t i;
-	size_t j;
+	char	*res;
+	size_t	len_dest;
+	size_t	len_src;
+	size_t	i;
+	size_t	j;
 
 	if (!dest || !src)
 		return (NULL);
-	if (start > end || start > (size_t)ft_strlen(src) || end > (size_t)ft_strlen(src))
+	if (start > (size_t)ft_strlen(src) || end > (size_t)ft_strlen(src))
 		return (NULL);
 	res = ft_alloc_mem_linepair(dest, src, &len_dest, &len_src);
 	if (!res)
 		return (NULL);
-	i = 0;
-	while (dest[i] != '\0')
-	{
-		res[i] = dest[i];
-		i++;
-	}
+	copy_from_dest(dest, &res, &i);
 	j = 0;
 	while (j + start < end)
 	{
@@ -71,14 +59,14 @@ char *ft_strnconcat(char *dest, char *src, size_t start, size_t end)
 	return (res);
 }
 
-char *get_perem(char *str, size_t start, size_t end)
+char	*get_perem(char *str, size_t start, size_t end)
 {
-	char *res;
-	size_t i;
+	char	*res;
+	size_t	i;
 
 	if (end < start)
 		return (NULL);
-	res = (char *)ft_calloc(sizeof(char) ,(end - start + 1));
+	res = (char *)ft_calloc(sizeof(char), (end - start + 1));
 	if (!res)
 		return (NULL);
 	i = 0;
@@ -93,51 +81,26 @@ char *get_perem(char *str, size_t start, size_t end)
 
 int	insert_var(char **str, t_list *env)
 {
-	size_t i;
-	size_t start;
-	char *perem;
-	char *res;
-	char *key;
+	size_t	i;
+	size_t	start;
+	char	*perem;
+	char	*res;
+	char	*key;
 
-
-
-	i = 0;
-
-
-	res = (char *)ft_calloc(1, 1);
-
-	if (!(*str))
-		return (0); // (?)
-
+	checks_and_init(&i, &res);
 	while ((*str)[i])
 	{
 		if ((*str)[i] == '$' && (*str)[i + 1])
 		{
-			i++;
-			start = i;
-			while (ft_isalnum((*str)[i]) || (*str)[i] == '_')
-				i++;
-			perem = get_perem(*str, start, i);
+			perem = iterate_per_perem(&i, &start, *str);
 			key = find_in_env(env, perem);
 			free(perem);
 			if (key != NULL)
 				res = ft_strnconcat(res, key, 0, ft_strlen(key));
 		}
 		else if ((*str)[i] == '$' && !(*str)[i + 1])
-		{
-			res = ft_strnconcat(res, (*str), i, i + 1);
-			i++;
-		}
-
-		if ((*str)[i] && (*str)[i] != '$')
-		{
-			start = i;
-			while (!((*str)[i] == '\0' || (*str)[i] == '$'))
-			{
-				i++;
-			}
-			res = ft_strnconcat(res, *str, start, i);
-		}
+			get_last_dollar(&i, *str, &res);
+		get_remaining_characters(&start, &i, (*str), &res);
 	}
 	*str = res;
 	return (SUCCES);

@@ -1,11 +1,11 @@
 #include "minishell.h"
 #include "pre_action.h"
 
-int init_pipe(t_list *gr1, t_list *gr2, t_base *base)
+int	init_pipe(t_list *gr1, t_list *gr2, t_base *base)
 {
-	int fds[2];
-	t_group *group1;
-	t_group *group2;
+	int		fds[2];
+	t_group	*group1;
+	t_group	*group2;
 
 	if (gr2 == NULL)
 		return (SUCCES);

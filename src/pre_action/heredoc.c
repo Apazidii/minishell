@@ -1,37 +1,30 @@
 #include "minishell.h"
 #include "pre_action.h"
 
-
-char *create_filename(char *s, int i)
+char	*create_filename(char *s, int i)
 {
-	char *num;
-	char *res;
-//	char *result;
+	char	*num;
+	char	*res;
 
 	num = ft_itoa(i);
 	if (num == NULL)
 		return (NULL);
 	res = ft_strjoin(s, num);
 	free(num);
-//	if (res == NULL)
-//		return (NULL);
-//	result = ft_strjoin("./tmp/", res);
-//	free(res);
 	return (res);
 }
 
-int heredoc(int *f, char *stop, t_list *env, t_group *group)
+int	heredoc(int *f, char *stop, t_list *env, t_group *group)
 {
-	int fd;
-	char *s;
-	char *temp;
-	static int i;
+	int			fd;
+	char		*s;
+	char		*temp;
+	static int	i;
 
-	group->heredoc_filename  = create_filename(group->arg_str[0], i++);
-
+	group->heredoc_filename = create_filename(group->arg_str[0], i++);
 	if (group->heredoc_filename == NULL)
 		return (MALLOC_ERROR);
-	fd = open(group->heredoc_filename, O_CREAT | O_WRONLY | O_TRUNC,  0644);
+	fd = open(group->heredoc_filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd == -1)
 	{
 		perror("heredoc");
@@ -42,9 +35,9 @@ int heredoc(int *f, char *stop, t_list *env, t_group *group)
 	{
 		s = readline("> ");
 		if (s == NULL)
-			break;
+			break ;
 		if (ft_strncmp(s, stop, ft_strlen(stop) + 1) == 0)
-			break;
+			break ;
 		temp = s;
 		if (insert_var(&s, env) != SUCCES)
 		{
@@ -60,8 +53,7 @@ int heredoc(int *f, char *stop, t_list *env, t_group *group)
 	if (s != NULL)
 		free(s);
 	close(fd);
-	fd = open(group->heredoc_filename,  O_RDONLY,  0644);
-
+	fd = open(group->heredoc_filename, O_RDONLY, 0644);
 	*f = fd;
 	return (SUCCES);
 }

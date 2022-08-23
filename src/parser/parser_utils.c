@@ -1,10 +1,10 @@
 #include "minishell.h"
 #include "parser.h"
 
-int check_parenthesis(t_list *lexer)
+int	check_parenthesis(t_list *lexer)
 {
-	int open;
-	int close;
+	int	open;
+	int	close;
 
 	open = 0;
 	close = 0;
@@ -22,10 +22,8 @@ int check_parenthesis(t_list *lexer)
 	return (1);
 }
 
-int check_pipe(t_list *lexer)
+int	check_pipe(t_list *lexer)
 {
-
-	//Проверить на пайп после пайпа
 	while (lexer)
 	{
 		if (((t_token *)lexer->content)->type == e_pipe && \
@@ -39,15 +37,15 @@ int check_pipe(t_list *lexer)
 	return (0);
 }
 
-
-void print_group(void *content)
+void	print_group(void *content)
 {
-//	char *red[] = {"qwe", "redire"};
-	t_group *group = (t_group *)content;
+	t_group	*group;
 	int		i;
 
+	group = (t_group *)content;
 	i = 0;
-	printf("--------------------------------------------------------------------\n\n");
+	printf("------------------------------------------------\
+	--------------------\n\n");
 	printf("\t\t\tprogram: %s\n", group->arg[0].arg);
 	printf("\t\t\targ: ");
 	while (++i < group->number_arg)
@@ -57,12 +55,14 @@ void print_group(void *content)
 	{
 		printf("\t\t\tredirect:\n");
 		i = 0;
-		while(i < group->number_redirect)
+		while (i < group->number_redirect)
 		{
-			printf("\t\t\t\ttype = %d file = %s\n", group->redirect[i].type_redirect, group->redirect[i].redirect_file);
+			printf("\t\t\t\ttype = %d file = %s\n", \
+			group->redirect[i].type_redirect, group->redirect[i].redirect_file);
 			i++;
 		}
 	}
 	printf("\n");
-	printf("--------------------------------------------------------------------\n");
+	printf("------------------------------------------------\
+	--------------------\n");
 }
