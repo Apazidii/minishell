@@ -6,7 +6,7 @@
 /*   By: dgalactu <dgalactu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 16:25:54 by dgalactu          #+#    #+#             */
-/*   Updated: 2022/08/24 16:36:32 by dgalactu         ###   ########.fr       */
+/*   Updated: 2022/08/25 02:58:09 by dgalactu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,8 +170,10 @@ void	get_remaining_characters(size_t *start, size_t *i, \
 	char *str, char **res);
 char	*ft_strnconcat(char *dest, char *src, size_t start, size_t end);
 char	*get_perem(char *str, size_t start, size_t end);
-void	copy_from_dest(char *dest, char **res, size_t *i);
+int		add_exit_code(t_list **list);
+int		change_exit_code(t_list *list, int exit_code);
 
+void	copy_from_dest(char *dest, char **res, size_t *i);
 //signal
 void	set_interactive_mode_signals(void);
 void	set_fork_signals(void);

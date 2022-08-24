@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dgalactu <dgalactu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/24 17:28:25 by dgalactu          #+#    #+#             */
+/*   Updated: 2022/08/25 02:58:09 by dgalactu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static void	start_command(t_base *base)
@@ -19,7 +31,7 @@ static void	start_command(t_base *base)
 			error_code = parser(base->lexer, base);
 		if (error_code == SUCCES)
 			error_code = pre_action(base);
-		base->exit_status = error_code;
+		change_exit_code(base->env_lst, error_code);
 		ft_lstclear(&base->lexer, free_token);
 		ft_lstclear(&base->groups, free_group_list);
 		errno = 0;
@@ -56,6 +68,11 @@ int	main(int argc, char *argv[], char *envp[])
 	ft_bzero(&base, sizeof(base));
 	base.env_arr = envp;
 	base.env_lst = parse_envp(envp);
+	if (add_exit_code(&base.env_lst) != SUCCES)
+	{
+		ft_putstr_fd("Init Error\n", 2);
+		return (1);
+	}
 	while (1)
 	{
 		error_code = run_command(&base);

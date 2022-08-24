@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dgalactu <dgalactu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/25 01:37:04 by dgalactu          #+#    #+#             */
+/*   Updated: 2022/08/25 02:58:10 by dgalactu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "minishell.h"
 #include "pre_action.h"
 
@@ -14,23 +25,11 @@ char	*create_filename(char *s, int i)
 	return (res);
 }
 
-int	heredoc(int *f, char *stop, t_list *env, t_group *group)
+int	write_heredoc(char *stop, int fd, t_list *env)
 {
-	int			fd;
-	char		*s;
 	char		*temp;
-	static int	i;
+	char		*s;
 
-	group->heredoc_filename = create_filename(group->arg_str[0], i++);
-	if (group->heredoc_filename == NULL)
-		return (MALLOC_ERROR);
-	fd = open(group->heredoc_filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (fd == -1)
-	{
-		perror("heredoc");
-		errno = 0;
-		return (FILE_ERROR);
-	}
 	while (1)
 	{
 		s = readline("> ");
@@ -52,6 +51,26 @@ int	heredoc(int *f, char *stop, t_list *env, t_group *group)
 	}
 	if (s != NULL)
 		free(s);
+	return (SUCCES);
+}
+
+int	heredoc(int *f, char *stop, t_list *env, t_group *group)
+{
+	int			fd;
+	static int	i;
+
+	group->heredoc_filename = create_filename(group->arg_str[0], i++);
+	if (group->heredoc_filename == NULL)
+		return (MALLOC_ERROR);
+	fd = open(group->heredoc_filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fd == -1)
+	{
+		perror("heredoc");
+		errno = 0;
+		return (FILE_ERROR);
+	}
+	if (write_heredoc(stop, fd, env) != SUCCES)
+		return (MALLOC_ERROR);
 	close(fd);
 	fd = open(group->heredoc_filename, O_RDONLY, 0644);
 	*f = fd;
