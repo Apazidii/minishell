@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executer_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dgalactu <dgalactu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/24 22:58:38 by dgalactu          #+#    #+#             */
+/*   Updated: 2022/08/24 23:04:20 by dgalactu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "minishell.h"
 #include "executer.h"
 
@@ -25,18 +36,11 @@ int	get_path(t_list *env, char ***res)
 	return (SUCCES);
 }
 
-int	check_bin(char *path, char *bin)
+int	check_bin_path(DIR *dir, char *bin)
 {
-	DIR				*dir;
 	struct dirent	*dent;
 	int				k;
 
-	dir = opendir(path);
-	if (dir == NULL)
-	{
-		printf("Dir error\n");
-		return (DIR_ERROR);
-	}
 	dent = readdir(dir);
 	while (dent)
 	{
@@ -51,6 +55,21 @@ int	check_bin(char *path, char *bin)
 		}
 		dent = readdir(dir);
 	}
+	return (DIR_NOT_FOUND);
+}
+
+int	check_bin(char *path, char *bin)
+{
+	DIR				*dir;
+
+	dir = opendir(path);
+	if (dir == NULL)
+	{
+		printf("Dir error\n");
+		return (DIR_ERROR);
+	}
+	if (check_bin_path(dir, bin) == SUCCES)
+		return (SUCCES);
 	closedir(dir);
 	if (errno != 0)
 	{
@@ -59,6 +78,23 @@ int	check_bin(char *path, char *bin)
 		return (DIR_ERROR);
 	}
 	return (DIR_NOT_FOUND);
+}
+
+int	check_path(char **path_arr, char *bin, int *i)
+{
+	int	error_code;
+
+	*i = 0;
+	while (path_arr[*i])
+	{
+		error_code = check_bin(path_arr[*i], bin);
+		if (error_code == DIR_ERROR && free_arr(path_arr))
+			return (error_code);
+		if (error_code == SUCCES)
+			break ;
+		(*i)++;
+	}
+	return (error_code);
 }
 
 int	find_bin(t_list *env, char *bin, char **res)
@@ -71,16 +107,9 @@ int	find_bin(t_list *env, char *bin, char **res)
 	error_code = get_path(env, &path_arr);
 	if (error_code != SUCCES)
 		return (error_code);
-	i = 0;
-	while (path_arr[i])
-	{
-		error_code = check_bin(path_arr[i], bin);
-		if (error_code == DIR_ERROR && free_arr(path_arr))
-			return (error_code);
-		if (error_code == SUCCES)
-			break ;
-		i++;
-	}
+	error_code = check_path(path_arr, bin, &i);
+	if (error_code == DIR_ERROR)
+		return (error_code);
 	if (error_code == DIR_NOT_FOUND && free_arr(path_arr))
 	{
 		printf("%s: command not found\n", bin);
