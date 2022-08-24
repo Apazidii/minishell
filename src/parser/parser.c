@@ -1,6 +1,19 @@
 #include "minishell.h"
 #include "parser.h"
 
+int	unexpected_token(t_list **lexer)
+{
+	if (((t_token *)((*lexer)->content))->type == e_newline
+		|| ((t_token *)((*lexer)->content))->type == e_pipe)
+	{
+		printf("minishell: syntax error near unexpected token \'%.*s\'\n", \
+		((t_token *)((*lexer)->content))->len, \
+		((t_token *)((*lexer)->content))->token);
+		return (VALID_ERROR);
+	}
+	return (SUCCES);
+}
+
 int	group_parser(t_list **lexer, t_group **gr)
 {
 	int	error_code;
@@ -8,14 +21,8 @@ int	group_parser(t_list **lexer, t_group **gr)
 	*gr = (t_group *) ft_calloc(sizeof(t_group), 1);
 	if (*gr == NULL)
 		return (MALLOC_ERROR);
-	if (((t_token *)((*lexer)->content))->type == e_newline
-	|| ((t_token *)((*lexer)->content))->type == e_pipe)
-	{
-		printf("minishell: syntax error near unexpected token \'%.*s\'\n",
-			((t_token *)((*lexer)->content))->len,
-			((t_token *)((*lexer)->content))->token);
+	if (unexpected_token(lexer) != SUCCES)
 		return (VALID_ERROR);
-	}
 	while (((t_token *)((*lexer)->content))->type != e_newline
 		&& ((t_token *)((*lexer)->content))->type != e_pipe)
 	{

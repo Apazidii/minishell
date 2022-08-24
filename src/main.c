@@ -51,7 +51,6 @@ int	main(int argc, char *argv[], char *envp[])
 	t_base	base;
 	int		error_code;
 
-
 	(void)argc;
 	(void)argv;
 	ft_bzero(&base, sizeof(base));
@@ -67,4 +66,3 @@ int	main(int argc, char *argv[], char *envp[])
 	ft_lstclear(&base.env_lst, free_dict);
 	return (0);
 }
-
