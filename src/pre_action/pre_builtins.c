@@ -1,7 +1,7 @@
 #include "minishell.h"
 #include "pre_action.h"
 
-int chech_builtin(t_group *group, t_base *base)
+int	chech_builtin(t_group *group, t_base *base)
 {
 	if (ft_strncmp(group->arg_str[0], "echo", 5) == 0)
 		return (echo(group->arg_str, group->number_arg));
@@ -17,9 +17,5 @@ int chech_builtin(t_group *group, t_base *base)
 		return (unset(group->arg_str, group->number_arg, base));
 	if (ft_strncmp(group->arg_str[0], "env", 4) == 0)
 		return (env(base));
-
 	return (NOT_FOUND);
-
-
-
 }
