@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgalactu <dgalactu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olga <olga@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 17:39:25 by dgalactu          #+#    #+#             */
-/*   Updated: 2022/08/24 17:39:25 by dgalactu         ###   ########.fr       */
+/*   Updated: 2022/08/25 18:45:12 by olga             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../../hdr/minishell.h"
 
 char	*find_in_env(t_list *env, char *key)
@@ -101,16 +102,24 @@ int	insert_var(char **str, t_list *env)
 	checks_and_init(&i, &res);
 	while ((*str)[i])
 	{
-		if ((*str)[i] == '$' && (*str)[i + 1])
+		if ((*str)[i] == '$' && (*str)[i + 1] && (*str)[i + 1] != '?')
 		{
 			perem = iterate_per_perem(&i, &start, *str);
 			key = find_in_env(env, perem);
 			free(perem);
 			if (key != NULL)
 				res = ft_strnconcat(res, key, 0, ft_strlen(key));
+			// free(key);
 		}
 		else if ((*str)[i] == '$' && !(*str)[i + 1])
 			get_last_dollar(&i, *str, &res);
+		else if ((*str)[i] == '$' && (*str)[i + 1] && (*str)[i + 1] == '?')
+		{
+			key = find_in_env(env, "?");
+			res = ft_strnconcat(res, key, 0, ft_strlen(key));
+			// free(key);
+			i += 2;
+		}
 		get_remaining_characters(&start, &i, (*str), &res);
 	}
 	*str = res;
