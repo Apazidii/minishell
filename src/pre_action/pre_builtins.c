@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   pre_builtins.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgalactu <dgalactu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olga <olga@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 01:36:44 by dgalactu          #+#    #+#             */
-/*   Updated: 2022/08/25 01:36:44 by dgalactu         ###   ########.fr       */
+/*   Updated: 2022/08/25 23:17:42 by olga             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 #include "pre_action.h"
 
@@ -16,7 +17,7 @@ int	chech_builtin(t_group *group, t_base *base)
 {
 	if (ft_strncmp(group->arg_str[0], "echo", 5) == 0)
 		return (echo(group->arg_str, group->number_arg));
-	if (ft_strncmp(group->arg_str[0], "pwd", 6) == 0)
+	if (ft_strncmp(group->arg_str[0], "pwd", 4) == 0)
 		return (pwd(base));
 	if (ft_strncmp(group->arg_str[0], "cd", 3) == 0)
 		return (cd(group->arg_str, group->number_arg));
