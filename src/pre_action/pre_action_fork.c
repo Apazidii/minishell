@@ -30,7 +30,7 @@ int	apply_fork(t_group *group, t_base *base, int i)
 	base->pid[i] = fork();
 	if (base->pid[i] == -1)
 	{
-		printf("Fork failed\n");
+		ft_putendl_fd("Fork failed", 2);
 		return (FORK_ERROR);
 	}
 	if (base->pid[i] == 0)

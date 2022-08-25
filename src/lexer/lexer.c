@@ -37,7 +37,7 @@ int	lexer(char *command, t_base *base)
 	lexer = NULL;
 	if (check_qutes(command))
 	{
-		printf("Error: Quotation marks are not closed\n");
+		ft_putendl_fd("Error: Quotation marks are not closed", 2);
 		return (VALID_ERROR);
 	}
 	while (*command != '\0')

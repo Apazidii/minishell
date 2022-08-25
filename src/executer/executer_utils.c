@@ -65,7 +65,7 @@ int	check_bin(char *path, char *bin)
 	dir = opendir(path);
 	if (dir == NULL)
 	{
-		printf("Dir error\n");
+		ft_putendl_fd("Dir error", 2);
 		return (DIR_ERROR);
 	}
 	if (check_bin_path(dir, bin) == SUCCES)
@@ -112,7 +112,8 @@ int	find_bin(t_list *env, char *bin, char **res)
 		return (error_code);
 	if (error_code == DIR_NOT_FOUND && free_arr(path_arr))
 	{
-		printf("%s: command not found\n", bin);
+		ft_putstr_fd(bin, 2);
+		ft_putendl_fd(": command not found", 2);
 		return (error_code);
 	}
 	path = ft_strjoin(path_arr[i], "/");

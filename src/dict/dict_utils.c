@@ -58,14 +58,6 @@ t_list	*parse_envp(char *envp[])
 	return (env_lst);
 }
 
-void	print_content(void *content)
-{
-	t_dict	*c;
-
-	c = (t_dict *)content;
-	printf("%-40s%s\n", c->key, c->value);
-}
-
 void	free_dict(void *content)
 {
 	t_dict	*c;

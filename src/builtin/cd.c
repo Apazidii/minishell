@@ -15,10 +15,13 @@
 int	cd(char **arg, int num_arg)
 {
 	if (num_arg != 2)
-		printf("minishell: cd: too many arguments");
+		ft_putendl_fd("minishell: cd: too many arguments", 2);
 	if (chdir(arg[1]) == -1)
 	{
-		printf("cd: %s: %s\n", arg[1], strerror(errno));
+		ft_putstr_fd("cd: ", 2);
+		ft_putstr_fd(arg[1], 2);
+		ft_putstr_fd(" ", 2);
+		ft_putendl_fd(strerror(errno), 2);
 		errno = 0;
 		return (BUILTIN_ERROR);
 	}

@@ -104,7 +104,9 @@ int	add_env(char *s, t_base *base)
 {
 	if (valid_env(s))
 	{
-		printf("minishell: export: \'%s\': not a valid identifier\n", s);
+		ft_putstr_fd("minishell: export: \'", 2);
+		ft_putstr_fd(s, 2);
+		ft_putendl_fd("\': not a valid identifier", 2);
 		return (SUCCES);
 	}
 	if (find_rav(s) == 0)
