@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgalactu <dgalactu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olga <olga@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 16:25:54 by dgalactu          #+#    #+#             */
-/*   Updated: 2022/08/24 17:22:26 by dgalactu         ###   ########.fr       */
+/*   Updated: 2022/08/26 00:19:47 by olga             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ char	*ft_strnconcat(char *dest, char *src, size_t start, size_t end);
 char	*get_perem(char *str, size_t start, size_t end);
 int		add_exit_code(t_list **list);
 int		change_exit_code(t_list *list, int exit_code);
+void	get_status(char **key, char** res, size_t *i, t_list *env);
 
 void	copy_from_dest(char *dest, char **res, size_t *i);
 //signal

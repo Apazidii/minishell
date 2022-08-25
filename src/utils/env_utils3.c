@@ -20,3 +20,10 @@ void	copy_from_dest(char *dest, char **res, size_t *i)
 		(*i)++;
 	}
 }
+
+void	get_status(char **key, char **res, size_t *i, t_list *env)
+{
+	*key = find_in_env(env, "?");
+	*res = ft_strnconcat(*res, *key, 0, ft_strlen(*key));
+	*i += 2;
+}
