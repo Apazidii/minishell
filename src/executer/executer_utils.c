@@ -6,7 +6,7 @@
 /*   By: dgalactu <dgalactu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 22:58:38 by dgalactu          #+#    #+#             */
-/*   Updated: 2022/08/26 14:41:48 by dgalactu         ###   ########.fr       */
+/*   Updated: 2022/08/26 15:42:22 by dgalactu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -112,9 +112,8 @@ int	find_bin(t_list *env, char *bin, char **res)
 		return (error_code);
 	if (error_code == DIR_NOT_FOUND && free_arr(path_arr))
 	{
-		ft_putstr_fd(bin, 2);
-		ft_putendl_fd(": command not found", 2);
-		return (error_code);
+		*res = bin;
+		return (SUCCES);
 	}
 	path = ft_strjoin(path_arr[i], "/");
 	*res = ft_strjoin(path, bin);

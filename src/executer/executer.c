@@ -22,7 +22,7 @@ int	run_exec(t_base *base, char *bin, char **arg)
 		return (error_code);
 	if (execve(pbin, arg, base->env_arr) == -1)
 	{
-		perror(strerror(errno));
+		perror(pbin);
 		errno = 0;
 		return (EXEC_ERROR);
 	}

@@ -41,5 +41,6 @@ int		replace_fd_group(t_group *group);
 void	return_fd_group(t_group *group);
 
 void	close_unused_fd(t_group *group);
+int		null_program(t_group *group);
 
 #endif

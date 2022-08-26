@@ -6,7 +6,7 @@
 /*   By: dgalactu <dgalactu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 01:36:57 by dgalactu          #+#    #+#             */
-/*   Updated: 2022/08/26 14:41:48 by dgalactu         ###   ########.fr       */
+/*   Updated: 2022/08/26 23:22:59 by dgalactu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -32,6 +32,8 @@ int	kill_pid(t_base *base)
 
 int	is_builtin(t_group *group)
 {
+	if (group->arg == NULL)
+		return (0);
 	if ((ft_strncmp(group->arg_str[0], "cd", 3) == 0 || \
 		ft_strncmp(group->arg_str[0], "echo", 5) == 0 || \
 		ft_strncmp(group->arg_str[0], "pwd", 4) == 0 || \
@@ -41,4 +43,10 @@ int	is_builtin(t_group *group)
 		ft_strncmp(group->arg_str[0], "exit", 5) == 0))
 		return (1);
 	return (0);
+}
+
+int	null_program(t_group *group)
+{
+	return_fd_group(group);
+	return (SUCCES);
 }

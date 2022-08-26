@@ -6,7 +6,7 @@
 /*   By: dgalactu <dgalactu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 00:38:07 by dgalactu          #+#    #+#             */
-/*   Updated: 2022/08/26 14:41:48 by dgalactu         ###   ########.fr       */
+/*   Updated: 2022/08/26 23:22:59 by dgalactu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -61,6 +61,8 @@ int	run_group(t_list *all_groups, t_base *base, int l, int i)
 	error_code = redirect(all_groups->content, base->env_lst);
 	if (error_code != SUCCES && kill_pid(base) && free_one(base->pid))
 		return (error_code);
+	if (group->arg == NULL)
+		return (null_program(group));
 	if (l == 1 && is_builtin(all_groups->content))
 		return (run_builtin(all_groups, base, group));
 	set_fork_signals();
