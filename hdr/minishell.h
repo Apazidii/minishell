@@ -127,7 +127,7 @@ int		executer(t_group *group, t_base *base);
 int		echo(char **arg, int num_arg);
 int		pwd(t_base *base);
 int		cd(char **arg, int num_arg);
-int		builtint_exit(t_base *base);
+int		builtint_exit(t_base *base, char **arg, int num_arg);
 int		export(char **arg, int num_arg, t_base *base);
 int		unset(char **arg, int num_arg, t_base *base);
 int		env(t_base *base);
@@ -157,7 +157,8 @@ int		get_cwd(t_base *base);
 int		is_space_string(char *s);
 char	*add_newline(char *cmd);
 
-int		insert_var(char **str, t_list *env);
+//int		insert_var(char **str, t_list *env);
+int	insert_var(char **str, t_list *env, int flag);
 
 //env
 char	*find_in_env(t_list *env, char *key);

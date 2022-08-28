@@ -15,7 +15,10 @@
 int	cd(char **arg, int num_arg)
 {
 	if (num_arg != 2)
+	{
 		ft_putendl_fd("minishell: cd: too many arguments", 2);
+		return (BUILTIN_ERROR);
+	}
 	if (chdir(arg[1]) == -1)
 	{
 		ft_putstr_fd("cd: ", 2);

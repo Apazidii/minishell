@@ -25,9 +25,8 @@ int	arg_in_arr_str(t_group *group, t_list *env)
 	while (i < group->number_arg)
 	{
 		group->arg_str[i] = group->arg[i].arg;
-		if (group->arg[i].rep_var == 1)
-			if (insert_var(&(group->arg_str[i]), env) != SUCCES)
-				return (MALLOC_ERROR);
+		if (insert_var(&(group->arg_str[i]), env, group->arg[i].rep_var) != SUCCES)
+			return (MALLOC_ERROR);
 		i++;
 	}
 	group->arg_str[i] = NULL;

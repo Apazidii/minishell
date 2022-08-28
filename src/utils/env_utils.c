@@ -91,7 +91,7 @@ char	*get_perem(char *str, size_t start, size_t end)
 	return (res);
 }
 
-int	insert_var(char **str, t_list *env)
+int	insert_var(char **str, t_list *env, int flag)
 {
 	size_t	i;
 	size_t	start;
@@ -99,6 +99,13 @@ int	insert_var(char **str, t_list *env)
 	char	*res;
 	char	*key;
 
+	if (flag == 0)
+	{
+		*str = ft_strdup(*str);
+		if (*str == NULL)
+			return (MALLOC_ERROR);
+		return (SUCCES);
+	}
 	checks_and_init(&i, &res);
 	while ((*str)[i])
 	{

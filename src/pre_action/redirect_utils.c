@@ -75,12 +75,10 @@ int	redirect_repvar(t_redirect *redirect, int i, t_list *env)
 {
 	char	*temp;
 
-	if (redirect[i].rep_var == 1)
-	{
-		temp = redirect[i].redirect_file;
-		if (insert_var(&(redirect[i].redirect_file), env) != SUCCES)
-			return (MALLOC_ERROR);
-		free(temp);
-	}
+
+	temp = redirect[i].redirect_file;
+	if (insert_var(&(redirect[i].redirect_file), env, redirect[i].rep_var) != SUCCES)
+		return (MALLOC_ERROR);
+	free(temp);
 	return (SUCCES);
 }

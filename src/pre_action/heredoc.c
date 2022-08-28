@@ -38,7 +38,7 @@ int	write_heredoc(char *stop, int fd, t_list *env)
 		if (ft_strncmp(s, stop, ft_strlen(stop) + 1) == 0)
 			break ;
 		temp = s;
-		if (insert_var(&s, env) != SUCCES)
+		if (insert_var(&s, env, 1) != SUCCES)
 		{
 			free(s);
 			close(fd);
