@@ -6,7 +6,7 @@
 /*   By: dgalactu <dgalactu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 17:40:29 by dgalactu          #+#    #+#             */
-/*   Updated: 2022/08/26 14:41:48 by dgalactu         ###   ########.fr       */
+/*   Updated: 2022/08/29 17:09:04 by dgalactu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -31,7 +31,7 @@ t_redirect	*add_redirect(t_redirect *redirect, int num_redirect,
 		return (NULL);
 	res[i].rep_var = token->rep_var;
 	res[i].type_redirect = type;
-	free_group_redirect(redirect, num_redirect - 1);
+	free(redirect);
 	return (res);
 }
 
